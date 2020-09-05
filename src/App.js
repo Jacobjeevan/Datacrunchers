@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { Auth0Provider } from "@auth0/auth0-react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+ReactDOM.render(
+  <Auth0Provider
+    domain="datacrunchers.us.auth0.com"
+    clientId="2WJnII0VAIJboL03wEDCRvNZjQ5YWcVZ"
+    redirectUri={window.location.origin}
+    audience="https://datacrunchers.us.auth0.com/api/v2/"
+    scope="read:current_user update:current_user_metadata"
+  >
+    <App />
+  </Auth0Provider>,
+  document.getElementById("root")
+);
