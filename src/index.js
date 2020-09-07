@@ -5,10 +5,10 @@ import { Auth0Provider } from "@auth0/auth0-react";
 
 ReactDOM.render(
   <Auth0Provider
-    domain="datacrunchers.us.auth0.com"
-    clientId="2WJnII0VAIJboL03wEDCRvNZjQ5YWcVZ"
+    domain={process.env.REACT_APP_domain}
+    clientId={process.env.REACT_APP_clientId}
     redirectUri={window.location.origin}
-    audience="https://datacrunchers.us.auth0.com/api/v2/"
+    audience={process.env.REACT_APP_audience}
     scope="read:current_user update:current_user_metadata"
   >
     <App />
