@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
 
@@ -16,10 +18,10 @@ export default class Header extends Component {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto">
-                <Nav.Link href="#">
+                <Nav.Link>
                   <Link to="/events">Events</Link>
                 </Nav.Link>
-                <Nav.Link href="#">
+                <Nav.Link>
                   <Link to="/projects">Projects</Link>
                 </Nav.Link>
                 <NavDropdown title="Library" id="collasible-nav-dropdown">
@@ -32,8 +34,8 @@ export default class Header extends Component {
                 </NavDropdown>
               </Nav>
               <Nav>
-                <Nav.Link href="#">Login</Nav.Link>
-                <Nav.Link href="#">Register</Nav.Link>
+                <Nav.Link>Login</Nav.Link>
+                <Nav.Link>Register</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Navbar>
