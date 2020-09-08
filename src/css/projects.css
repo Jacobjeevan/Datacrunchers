@@ -1,0 +1,26 @@
+.project-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  text-align: center;
+}
+
+.description {
+  text-align: center;
+}
+
+.authors {
+  text-align: center;
+}
+
+.github {
+  text-align: center;
+}
