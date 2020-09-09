@@ -1,35 +1,32 @@
-import React from "react";
-import { useQuery } from "react-query";
-import fetchProjects from "../../api/projects";
+import React, { Component } from "react";
 import "../../css/projects.css";
 import Container from "react-bootstrap/Container";
+import Projectsform from "./private/Projectsform";
+import ProjectsContainer from "./ProjectContainer";
+import Button from "react-bootstrap/Button";
 
-export default function Projects() {
-  const { isLoading, isError, data, error } = useQuery(
-    "projectData",
-    fetchProjects
-  );
+export default class Projects extends Component {
+  state = {
+    formDisplay: false,
+  };
 
-  if (isLoading) {
-    return <span>Loading...</span>;
+  toggleForm = () => {
+    this.setState({
+      formDisplay: !this.state.formDisplay,
+    });
+  };
+
+  render() {
+    return (
+      <Container>
+        <Button variant="primary" onClick={this.toggleForm}>
+          Add Project
+        </Button>{" "}
+        {this.state.formDisplay ? (
+          <Projectsform toggle={this.toggleForm} />
+        ) : null}
+        <ProjectsContainer />
+      </Container>
+    );
   }
-
-  if (isError) {
-    return <span>Error: {error.message}</span>;
-  }
-
-  return (
-    <Container>
-      <div className="project-container">
-        {data.map((project) => (
-          <div key={project.id} className="project">
-            <div className="title">{project.title}</div>
-            <div className="description">{project.description}</div>
-            <div className="authors">{project.authors}</div>
-            <div className="github">{project.github}</div>
-          </div>
-        ))}
-      </div>
-    </Container>
-  );
 }
