@@ -5,9 +5,11 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
 import "../../css/header.css";
+import { withAuth0 } from "@auth0/auth0-react";
 
-export default class Header extends Component {
+class Header extends Component {
   render() {
+    const { loginWithRedirect, isAuthenticated, logout } = this.props.auth0;
     return (
       <div>
         <Container>
@@ -35,7 +37,15 @@ export default class Header extends Component {
                 </NavDropdown>
               </Nav>
               <Nav>
-                <Nav.Link>Login</Nav.Link>
+                {isAuthenticated ? (
+                  <Nav.Link
+                    onClick={() => logout({ returnTo: window.location.origin })}
+                  >
+                    Logout
+                  </Nav.Link>
+                ) : (
+                  <Nav.Link onClick={() => loginWithRedirect()}>Login</Nav.Link>
+                )}
                 <Nav.Link>Register</Nav.Link>
               </Nav>
             </Navbar.Collapse>
@@ -45,3 +55,5 @@ export default class Header extends Component {
     );
   }
 }
+
+export default withAuth0(Header);
