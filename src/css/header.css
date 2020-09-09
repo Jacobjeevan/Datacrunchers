@@ -1,3 +1,14 @@
 .container {
   margin-top: 10px;
 }
+
+.navbar-item {
+  padding: 10px;
+  margin: 5px;
+  text-align: center;
+}
+
+.dropdown-item {
+  padding: 5px;
+  text-align: center;
+}

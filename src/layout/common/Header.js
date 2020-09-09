@@ -14,26 +14,29 @@ class Header extends Component {
       <div>
         <Container>
           <Navbar collapseOnSelect expand="lg" variant="light" bg="light">
-            <Navbar.Brand>
+            <div className="navbar-item">
               <Link to="/">Data Crunchers</Link>
-            </Navbar.Brand>
-
+            </div>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className="mr-auto">
-                <Nav.Link>
+              <Nav className="mr-auto" as="ul">
+                <div className="navbar-item">
                   <Link to="/events">Events</Link>
-                </Nav.Link>
-                <Nav.Link>
+                </div>
+                <div className="navbar-item">
                   <Link to="/projects">Projects</Link>
-                </Nav.Link>
-                <NavDropdown title="Library" id="collasible-nav-dropdown">
-                  <NavDropdown.Item>
+                </div>
+                <NavDropdown
+                  className="navbar-item"
+                  title="Library"
+                  id="collasible-nav-dropdown"
+                >
+                  <div className="dropdown-item">
                     <Link to="/resources">Resources</Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item>
+                  </div>
+                  <div className="dropdown-item">
                     <Link to="/career-prep">Career Prep</Link>
-                  </NavDropdown.Item>
+                  </div>
                 </NavDropdown>
               </Nav>
               <Nav>
