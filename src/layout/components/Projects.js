@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../../css/projects.css";
 import Container from "react-bootstrap/Container";
-import Projectsform from "./private/Projectsform";
 import ProjectsContainer from "./ProjectContainer";
 import Button from "react-bootstrap/Button";
 
@@ -22,10 +21,10 @@ export default class Projects extends Component {
         <Button variant="primary" onClick={this.toggleForm}>
           Add Project
         </Button>{" "}
-        {this.state.formDisplay ? (
-          <Projectsform toggle={this.toggleForm} />
-        ) : null}
-        <ProjectsContainer />
+        <ProjectsContainer
+          formDisplay={this.state.formDisplay}
+          toggleForm={this.toggleForm}
+        />
       </Container>
     );
   }
