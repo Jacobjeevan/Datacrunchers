@@ -1,17 +1,24 @@
 import axios from "axios";
 
-export function fetchProjects() {
-  return axios
-    .get(`${process.env.REACT_APP_API_URL}projects/`)
-    .then((res) => res.data)
-    .catch((err) => console.log(err));
+export async function fetchProjects() {
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}projects/`);
+    return res.data;
+  } catch (err) {
+    return console.log(err);
+  }
 }
 
-export function addProject(body) {
-  return axios
-    .post(`${process.env.REACT_APP_API_URL}projects/add`, body)
-    .then((res) => console.log(res.data))
-    .catch((err) => console.log(err));
+export async function addProject(body) {
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_URL}projects/add`,
+      body
+    );
+    return console.log(res.data);
+  } catch (err) {
+    return console.log(err);
+  }
 }
 
 // add <- takes in access token
