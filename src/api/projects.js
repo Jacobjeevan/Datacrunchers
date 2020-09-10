@@ -1,6 +1,16 @@
-export default function fetchProjects() {
-  return fetch(`${process.env.REACT_APP_API_URL}projects/`)
-    .then((res) => res.json())
+import axios from "axios";
+
+export function fetchProjects() {
+  return axios
+    .get(`${process.env.REACT_APP_API_URL}projects/`)
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
+}
+
+export function addProject(body) {
+  return axios
+    .post(`${process.env.REACT_APP_API_URL}projects/add`, body)
+    .then((res) => console.log(res.data))
     .catch((err) => console.log(err));
 }
 
