@@ -1,14 +1,12 @@
 import React from "react";
-import { useQuery } from "react-query";
 import Projectsform from "./private/Projectsform";
-import { fetchProjects } from "../../api/projects";
+import { useGetProjects, useDeleteProject } from "../../api/projects";
 import "../../css/projects.css";
+import Button from "react-bootstrap/Button";
 
 export default function ProjectContainer(props) {
-  const { isLoading, isError, data, error } = useQuery(
-    "projectData",
-    fetchProjects
-  );
+  const { isLoading, isError, data, error } = useGetProjects();
+  const [deleteProject] = useDeleteProject();
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -16,6 +14,10 @@ export default function ProjectContainer(props) {
 
   if (isError) {
     return <span>Error: {error.message}</span>;
+  }
+
+  function handleClick(id) {
+    deleteProject(id);
   }
 
   return (
@@ -29,6 +31,13 @@ export default function ProjectContainer(props) {
             <div className="description">{project.description}</div>
             <div className="authors">{project.authors}</div>
             <div className="github">{project.github}</div>
+            <Button
+              variant="danger"
+              type="button"
+              onClick={handleClick.bind(this, project._id)}
+            >
+              Delete
+            </Button>
           </div>
         ))}
       </div>
