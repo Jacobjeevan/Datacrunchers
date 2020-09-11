@@ -1,11 +1,16 @@
 import React from "react";
 import Projectsform from "./private/Projectsform";
-import { useGetProjects, useDeleteProject } from "../../api/projects";
+import {
+  useGetProjects,
+  useDeleteProject,
+  useAddProject,
+} from "../../api/projects";
 import "../../css/projects.css";
 import Button from "react-bootstrap/Button";
 
 export default function ProjectContainer(props) {
   const { isLoading, isError, data, error } = useGetProjects();
+  const [addProject] = useAddProject();
   const [deleteProject] = useDeleteProject();
 
   if (isLoading) {
@@ -20,9 +25,15 @@ export default function ProjectContainer(props) {
     deleteProject(id);
   }
 
+  function submitForm(values) {
+    addProject(values);
+  }
+
   return (
     <div>
-      {props.formDisplay ? <Projectsform toggle={props.toggleForm} /> : null}
+      {props.formDisplay ? (
+        <Projectsform toggle={props.toggleForm} onSubmit={submitForm} />
+      ) : null}
 
       <div className="project-container">
         {data.map((project) => (

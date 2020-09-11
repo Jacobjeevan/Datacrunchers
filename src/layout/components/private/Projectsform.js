@@ -3,42 +3,50 @@ import FormField from "./Formfield";
 import "../../../css/projectsform.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { useAddProject } from "../../../api/projects";
 /* import { useAuth0 } from "@auth0/auth0-react";
  */
-import { useInput } from "./formInput-hook";
+import { useState, useEffect } from "react";
 
-export default function Projectsform(props) {
+const defaultFormValues = {
+  title: "",
+  description: "",
+  authors: "",
+  github: "",
+};
+
+export default function Projectsform({
+  toggle,
+  onSubmit,
+  initialFormValues = defaultFormValues,
+}) {
+  const [formValues, setformValues] = useState(initialFormValues);
+
+  const setformValue = (field, value) =>
+    setformValues((old) => ({ ...old, [field]: value }));
+
+  useEffect(() => {
+    setformValues(initialFormValues);
+  }, [initialFormValues]);
+
   // const { isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const { value: title, bind: bindTitle, reset: resetTitle } = useInput("");
-  const { value: description, bind: bindDesc, reset: resetDesc } = useInput("");
-  const { value: authors, bind: bindAuthors, reset: resetAuthors } = useInput(
-    ""
-  );
-  const { value: github, bind: bindGithub, reset: resetGithub } = useInput("");
-
-  const [addProject] = useAddProject();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    const body = { title, description, authors, github };
-    addProject(body);
-    resetTitle();
-    resetDesc();
-    resetAuthors();
-    resetGithub();
+    onSubmit(formValues);
+    setformValues(defaultFormValues);
   };
 
   return (
     <div className="formContent">
-      <span className="closeBtn" onClick={props.toggle}></span>
+      <span className="closeBtn" onClick={toggle}></span>
       <Form onSubmit={handleSubmit}>
         <FormField
           control="ProjectTitle"
           label="Title"
           type="text"
           text="Enter the name of the Project"
-          {...bindTitle}
+          value={formValues.title}
+          onChange={(e) => setformValue("title", e.target.value)}
         />
 
         <FormField
@@ -46,7 +54,8 @@ export default function Projectsform(props) {
           label="Description"
           type="text"
           text="Enter brief information about the Project"
-          {...bindDesc}
+          value={formValues.description}
+          onChange={(e) => setformValue("description", e.target.value)}
         />
 
         <FormField
@@ -54,7 +63,8 @@ export default function Projectsform(props) {
           label="Authors"
           type="text"
           text="Enter Name of Authors"
-          {...bindAuthors}
+          value={formValues.authors}
+          onChange={(e) => setformValue("authors", e.target.value)}
         />
 
         <FormField
@@ -62,7 +72,8 @@ export default function Projectsform(props) {
           label="Github"
           type="text"
           text="Enter Link to the Project"
-          {...bindGithub}
+          value={formValues.github}
+          onChange={(e) => setformValue("github", e.target.value)}
         />
 
         <Button variant="primary" type="submit">
