@@ -1,26 +1,43 @@
 import axios from "axios";
+import { useQuery, useMutation, queryCache } from "react-query";
 
-export async function fetchProjects() {
-  try {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}projects/`);
-    return res.data;
-  } catch (err) {
-    return console.log(err);
-  }
+export function useGetProjects() {
+  return useQuery("projectData", () =>
+    axios
+      .get(`${process.env.REACT_APP_API_URL}projects/`)
+      .then((res) => res.data)
+  );
 }
 
-export async function addProject(body) {
-  try {
-    const res = await axios.post(
-      `${process.env.REACT_APP_API_URL}projects/add`,
-      body
-    );
-    return console.log(res.data);
-  } catch (err) {
-    return console.log(err);
-  }
+export function useAddProject() {
+  return useMutation(
+    (body) => {
+      axios
+        .post(`${process.env.REACT_APP_API_URL}projects/add`, body)
+        .then((res) => res.data);
+    },
+    {
+      onSuccess: () => {
+        queryCache.invalidateQueries("projectData");
+      },
+    }
+  );
 }
 
+export function useDeleteProject() {
+  return useMutation(
+    (id) => {
+      axios
+        .delete(`${process.env.REACT_APP_API_URL}projects/delete/${id}`)
+        .then((res) => res.data);
+    },
+    {
+      onSuccess: () => {
+        queryCache.invalidateQueries("projectData");
+      },
+    }
+  );
+}
 // add <- takes in access token
 // update <- takes in access token
 // delete <- takes in access token
