@@ -1,43 +1,39 @@
 import axios from "axios";
-import { useQuery, useMutation, queryCache } from "react-query";
+import useSWR from "swr";
 
 export function useGetProjects() {
-  return useQuery("projectData", () =>
+  const { data, error, mutate } = useSWR("projectData", () =>
     axios
       .get(`${process.env.REACT_APP_API_URL}projects/`)
       .then((res) => res.data)
   );
+  return {
+    data,
+    isLoading: !error && !data,
+    error,
+    mutate,
+  };
 }
 
-export function useAddProject() {
-  return useMutation(
-    (body) => {
-      axios
-        .post(`${process.env.REACT_APP_API_URL}projects/add`, body)
-        .then((res) => res.data);
-    },
-    {
-      onSuccess: () => {
-        queryCache.invalidateQueries("projectData");
-      },
-    }
+export async function addProject(body) {
+  const res = await axios.post(
+    `${process.env.REACT_APP_API_URL}projects/add`,
+    body
   );
+  return res.data;
 }
 
-export function useDeleteProject() {
-  return useMutation(
-    (id) => {
-      axios
-        .delete(`${process.env.REACT_APP_API_URL}projects/delete/${id}`)
-        .then((res) => res.data);
-    },
-    {
-      onSuccess: () => {
-        queryCache.invalidateQueries("projectData");
-      },
-    }
+export async function deleteProject(id) {
+  const res = await axios.delete(
+    `${process.env.REACT_APP_API_URL}projects/delete/${id}`
   );
+  return res.data;
 }
-// add <- takes in access token
-// update <- takes in access token
-// delete <- takes in access token
+
+export async function updateProject(body) {
+  const res = await axios.post(
+    `${process.env.REACT_APP_API_URL}projects/update/${body.id}`,
+    body
+  );
+  return res.data;
+}
