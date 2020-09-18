@@ -2,8 +2,6 @@ import React from "react";
 import FormField from "./Formfield";
 import "../../../css/projectsform.css";
 import Form from "react-bootstrap/Form";
-/* import { useAuth0 } from "@auth0/auth0-react";
- */
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
 
@@ -31,8 +29,6 @@ export default function Projectsform({
   useEffect(() => {
     setformValues(initialFormValues);
   }, [initialFormValues]);
-
-  // const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   function changeEffect() {
     set({

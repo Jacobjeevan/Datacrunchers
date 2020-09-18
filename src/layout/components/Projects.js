@@ -9,6 +9,7 @@ import {
 import "../../css/projects.css";
 import { useState } from "react";
 import { mutate } from "swr";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const defaultFormValues = {
   title: "",
@@ -22,10 +23,27 @@ const defaultFormDisplay = {
   editForm: false,
 };
 
-export default function Project() {
+export default function Projects() {
+  const { isAuthenticated, getAccessTokenSilently, user } = useAuth0();
   const [displayForm, setdisplayForm] = useState(defaultFormDisplay);
   const [formValues, setformValues] = useState(defaultFormValues);
   const { isLoading, data, error } = useGetProjects();
+  let token;
+
+  async function getToken() {
+    try {
+      console.log(user);
+      token = await getAccessTokenSilently({
+        audience: process.env.REACT_APP_audience,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  if (isAuthenticated) {
+    getToken();
+  }
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -45,17 +63,17 @@ export default function Project() {
   }
 
   async function handleDelete(id) {
-    await deleteProject(id);
+    await deleteProject(id, token);
     mutate("projectData");
   }
 
   async function handleAdd(formValues) {
-    await addProject(formValues);
+    await addProject(formValues, token);
     mutate("projectData");
   }
 
   async function handleEdit(formValues) {
-    await updateProject(formValues);
+    await updateProject(formValues, token);
     mutate("projectData");
     toggleEditForm(false);
   }
@@ -73,14 +91,16 @@ export default function Project() {
 
   return (
     <div>
-      <button onClick={toggleCreateForm} className="submitBtn">
-        Add Project
-      </button>
+      {isAuthenticated && (
+        <button onClick={toggleCreateForm} className="submitBtn">
+          Add Project
+        </button>
+      )}
 
-      {displayForm.createForm ? (
+      {isAuthenticated && displayForm.createForm ? (
         <Projectsform toggle={toggleCreateForm} onSubmit={handleAdd} />
       ) : null}
-      {displayForm.editForm ? (
+      {isAuthenticated && displayForm.editForm ? (
         <Projectsform
           toggle={toggleEditForm.bind(null, false)}
           onSubmit={handleEdit}
@@ -97,20 +117,22 @@ export default function Project() {
               <div className="authors">{project.authors}</div>
               <div className="github">{project.github}</div>
             </div>
-            <div className="cardBtn-container">
-              <button
-                className="editBtn cardBtn"
-                onClick={handleEditButton.bind(this, project)}
-              >
-                Edit
-              </button>
-              <button
-                onClick={handleDelete.bind(this, project._id)}
-                className="deleteBtn cardBtn"
-              >
-                Delete
-              </button>
-            </div>
+            {isAuthenticated && (
+              <div className="cardBtn-container">
+                <button
+                  className="editBtn cardBtn"
+                  onClick={handleEditButton.bind(this, project)}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={handleDelete.bind(this, project._id)}
+                  className="deleteBtn cardBtn"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
           </div>
         ))}
       </div>
