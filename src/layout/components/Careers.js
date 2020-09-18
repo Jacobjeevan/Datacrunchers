@@ -1,12 +1,12 @@
 import React from "react";
-import Resourcesform from "./private/Resourcesform";
+import Careersform from "./private/Careersform";
 import {
-  useGetResources,
-  addResource,
-  deleteResource,
-  updateResource,
-} from "../../api/resources";
-import "../../css/resources.css";
+  useGetCareers,
+  addCareer,
+  deleteCareer,
+  updateCareer,
+} from "../../api/careers";
+import "../../css/careers.css";
 import { useState } from "react";
 import { mutate } from "swr";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -21,11 +21,11 @@ const defaultFormDisplay = {
   editForm: false,
 };
 
-export default function Resources() {
+export default function Careers() {
   const { isAuthenticated, getAccessTokenSilently, user } = useAuth0();
   const [displayForm, setdisplayForm] = useState(defaultFormDisplay);
   const [formValues, setformValues] = useState(defaultFormValues);
-  const { isLoading, data, error } = useGetResources();
+  const { isLoading, data, error } = useGetCareers();
   let token;
 
   async function getToken() {
@@ -61,26 +61,26 @@ export default function Resources() {
   }
 
   async function handleDelete(id) {
-    await deleteResource(id, token);
-    mutate("resourceData");
+    await deleteCareer(id, token);
+    mutate("careerData");
   }
 
   async function handleAdd(formValues) {
-    await addResource(formValues, token);
-    mutate("resourceData");
+    await addCareer(formValues, token);
+    mutate("careerData");
   }
 
   async function handleEdit(formValues) {
-    await updateResource(formValues, token);
-    mutate("resourceData");
+    await updateCareer(formValues, token);
+    mutate("careerData");
     toggleEditForm(false);
   }
 
-  function handleEditButton(resource) {
+  function handleEditButton(career) {
     setformValues({
-      id: resource._id,
-      title: resource.title,
-      description: resource.description,
+      id: career._id,
+      title: career.title,
+      description: career.description,
     });
     toggleEditForm();
   }
@@ -89,38 +89,38 @@ export default function Resources() {
     <div>
       {isAuthenticated && (
         <button onClick={toggleCreateForm} className="submitBtn">
-          Add Resource
+          Add Career
         </button>
       )}
 
       {isAuthenticated && displayForm.createForm ? (
-        <Resourcesform toggle={toggleCreateForm} onSubmit={handleAdd} />
+        <Careersform toggle={toggleCreateForm} onSubmit={handleAdd} />
       ) : null}
       {isAuthenticated && displayForm.editForm ? (
-        <Resourcesform
+        <Careersform
           toggle={toggleEditForm.bind(null, false)}
           onSubmit={handleEdit}
           initialFormValues={formValues}
         />
       ) : null}
 
-      <div className="resource-container">
-        {data.map((resource) => (
-          <div key={resource._id} className="resource">
-            <div className="resource-meta">
-              <div className="title">{resource.title}</div>
-              <div className="description">{resource.description}</div>
+      <div className="career-container">
+        {data.map((career) => (
+          <div key={career._id} className="career">
+            <div className="career-meta">
+              <div className="title">{career.title}</div>
+              <div className="description">{career.description}</div>
             </div>
             {isAuthenticated && (
               <div className="cardBtn-container">
                 <button
                   className="editBtn cardBtn"
-                  onClick={handleEditButton.bind(this, resource)}
+                  onClick={handleEditButton.bind(this, career)}
                 >
                   Edit
                 </button>
                 <button
-                  onClick={handleDelete.bind(this, resource._id)}
+                  onClick={handleDelete.bind(this, career._id)}
                   className="deleteBtn cardBtn"
                 >
                   Delete
