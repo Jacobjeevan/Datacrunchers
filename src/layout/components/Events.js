@@ -9,6 +9,7 @@ import {
 import "../../css/events.css";
 import { useState } from "react";
 import { mutate } from "swr";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const defaultFormValues = {
   title: "",
@@ -98,10 +99,10 @@ export default function Events() {
       )}
 
       {isAuthenticated && displayForm.createForm ? (
-        <Projectsform toggle={toggleCreateForm} onSubmit={handleAdd} />
+        <Eventsform toggle={toggleCreateForm} onSubmit={handleAdd} />
       ) : null}
       {isAuthenticated && displayForm.editForm ? (
-        <Projectsform
+        <Eventsform
           toggle={toggleEditForm.bind(null, false)}
           onSubmit={handleEdit}
           initialFormValues={formValues}
