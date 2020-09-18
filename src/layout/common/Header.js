@@ -47,7 +47,11 @@ class Header extends Component {
                     Logout
                   </Nav.Link>
                 ) : (
-                  <Nav.Link onClick={() => loginWithRedirect()}>Login</Nav.Link>
+                  <Nav.Link
+                    onClick={() => loginWithRedirect({ prompt: "consent" })}
+                  >
+                    Login
+                  </Nav.Link>
                 )}
                 <Nav.Link>Register</Nav.Link>
               </Nav>
