@@ -1,0 +1,78 @@
+.event-container {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.event {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  padding: 5px 0px 0px 0px;
+}
+
+.event-meta {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 25px 0px 25px;
+}
+
+.title {
+  text-align: center;
+}
+
+.description {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  flex-grow: 3;
+  text-align: center;
+}
+
+.authors {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.github {
+  text-align: center;
+}
+
+.cardBtn-container {
+  display: flex;
+  order: 99;
+  justify-content: space-between;
+}
+
+.cardBtn {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  color: black;
+  border: none;
+}
+
+.cardBtn a:hover {
+  text-decoration: none;
+}
+
+.deleteBtn {
+  color: white;
+  background-color: #c0392b;
+  font-weight: 300;
+}
+
+.deleteBtn:hover {
+  background-color: #e74c3c;
+}
+
+.editBtn {
+  background-color: #2980b9;
+  color: white;
+  font-weight: 300;
+}
+
+.editBtn:hover {
+  background-color: #3498db;
+}
