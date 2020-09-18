@@ -15,25 +15,40 @@ export function useGetProjects() {
   };
 }
 
-export async function addProject(body) {
+export async function addProject(body, token) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}projects/add`,
-    body
+    body,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
   return res.data;
 }
 
-export async function deleteProject(id) {
+export async function deleteProject(id, token) {
   const res = await axios.delete(
-    `${process.env.REACT_APP_API_URL}projects/delete/${id}`
+    `${process.env.REACT_APP_API_URL}projects/delete/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
   return res.data;
 }
 
-export async function updateProject(body) {
+export async function updateProject(body, token) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}projects/update/${body.id}`,
-    body
+    body,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
   return res.data;
 }
