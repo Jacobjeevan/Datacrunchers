@@ -26,18 +26,12 @@ class Header extends Component {
                 <div className="navbar-item">
                   <Link to="/projects">Projects</Link>
                 </div>
-                <NavDropdown
-                  className="navbar-item"
-                  title="Library"
-                  id="collasible-nav-dropdown"
-                >
-                  <div className="dropdown-item">
-                    <Link to="/resources">Resources</Link>
-                  </div>
-                  <div className="dropdown-item">
-                    <Link to="/career-prep">Career Prep</Link>
-                  </div>
-                </NavDropdown>
+                <div className="navbar-item">
+                  <Link to="/resources">Resources</Link>
+                </div>
+                <div className="navbar-item">
+                  <Link to="/career-prep">Career Prep</Link>
+                </div>
               </Nav>
               <Nav>
                 {isAuthenticated ? (

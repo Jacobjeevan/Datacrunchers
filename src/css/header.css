@@ -9,7 +9,6 @@
 .navbar-item {
   padding: 10px;
   margin: 5px;
-  align-self: center;
 }
 
 .dropdown-item {
@@ -19,5 +18,11 @@
 
 .navbar a {
   text-decoration: none;
-  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 3px;
+}
+
+.nav-link {
+  margin: 5px !important;
+  padding: 10px !important;
 }
