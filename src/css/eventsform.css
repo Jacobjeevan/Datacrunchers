@@ -34,3 +34,11 @@
 .cancelBtn:hover {
   background-color: #3498db;
 }
+
+.error {
+  border: 2px solid red;
+}
+
+.error-text {
+  font-size: small;
+}
