@@ -7,7 +7,7 @@ import { useSpring, animated } from "react-spring";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-const SignupSchema = Yup.object().shape({
+const formSchema = Yup.object().shape({
   title: Yup.string()
     .min(2, "Too Short!")
     .max(100, "Too Long!")
@@ -76,11 +76,14 @@ export default function Projectsform({
       <div className="formContent">
         <Formik
           initialValues={formValues}
-          validationSchema={SignupSchema}
+          validationSchema={formSchema}
           onSubmit={handleSubmit}
         >
           {({ errors, touched, handleBlur, handleSubmit, isSubmitting }) => (
             <Form onSubmit={handleSubmit}>
+              {errors.title && touched.title ? (
+                <div className="error-text">{errors.title}</div>
+              ) : null}
               <FormField
                 control="ProjectTitle"
                 label="Title"
@@ -91,8 +94,10 @@ export default function Projectsform({
                 onBlur={handleBlur}
                 className={errors.title && touched.title ? "error" : null}
               />
-              {errors.title && touched.title ? <div>{errors.title}</div> : null}
 
+              {errors.description && touched.description ? (
+                <div className="error-text">{errors.description}</div>
+              ) : null}
               <FormField
                 control="ProjectDesc"
                 label="Description"
@@ -105,10 +110,10 @@ export default function Projectsform({
                   errors.description && touched.description ? "error" : null
                 }
               />
-              {errors.description && touched.description ? (
-                <div>{errors.description}</div>
-              ) : null}
 
+              {errors.authors && touched.authors ? (
+                <div className="error-text">{errors.authors}</div>
+              ) : null}
               <FormField
                 control="ProjectAuthor"
                 label="Authors"
@@ -119,10 +124,10 @@ export default function Projectsform({
                 onBlur={handleBlur}
                 className={errors.authors && touched.authors ? "error" : null}
               />
-              {errors.authors && touched.authors ? (
-                <div>{errors.authors}</div>
-              ) : null}
 
+              {errors.github && touched.github ? (
+                <div className="error-text">{errors.github}</div>
+              ) : null}
               <FormField
                 control="ProjectLink"
                 label="Github"
@@ -133,9 +138,6 @@ export default function Projectsform({
                 onBlur={handleBlur}
                 className={errors.github && touched.github ? "error" : null}
               />
-              {errors.github && touched.github ? (
-                <div>{errors.github}</div>
-              ) : null}
 
               <button
                 type="submit"
