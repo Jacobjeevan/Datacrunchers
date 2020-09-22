@@ -34,3 +34,7 @@
 .cancelBtn:hover {
   background-color: #3498db;
 }
+
+.form-file {
+  margin-bottom: 1rem;
+}
