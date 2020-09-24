@@ -34,9 +34,6 @@ export default function Careersform({
     from: { opacity: 0 },
   }));
 
-  const setformValue = (field, value) =>
-    setformValues((old) => ({ ...old, [field]: value }));
-
   useEffect(() => {
     setformValues(initialFormValues);
   }, [initialFormValues]);
@@ -50,9 +47,9 @@ export default function Careersform({
     });
   }
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    onSubmit(formValues);
+  const handleSubmit = (values) => {
+    setformValues(values);
+    onSubmit(values);
     setformValues(defaultFormValues);
   };
 
@@ -67,9 +64,22 @@ export default function Careersform({
         <Formik
           initialValues={formValues}
           validationSchema={formSchema}
-          onSubmit={handleSubmit}
+          onSubmit={(values, { resetForm, setSubmitting }) => {
+            setSubmitting(true);
+            handleSubmit(values);
+            setSubmitting(false);
+            resetForm();
+          }}
         >
-          {({ errors, touched, handleBlur, handleSubmit, isSubmitting }) => (
+          {({
+            values,
+            errors,
+            touched,
+            handleBlur,
+            handleSubmit,
+            handleChange,
+            isSubmitting,
+          }) => (
             <Form onSubmit={handleSubmit}>
               {errors.title && touched.title ? (
                 <div className="error-text">{errors.title}</div>
@@ -79,8 +89,8 @@ export default function Careersform({
                 label="Title"
                 type="text"
                 text="Enter the name of the Career"
-                value={formValues.title}
-                onChange={(e) => setformValue("title", e.target.value)}
+                value={values.title}
+                onChange={handleChange("title")}
                 onBlur={handleBlur}
                 className={errors.title && touched.title ? "error" : null}
               />
@@ -93,8 +103,8 @@ export default function Careersform({
                 label="Description"
                 type="text"
                 text="Enter brief information about the Career"
-                value={formValues.description}
-                onChange={(e) => setformValue("description", e.target.value)}
+                value={values.description}
+                onChange={handleChange("description")}
                 onBlur={handleBlur}
                 className={
                   errors.description && touched.description ? "error" : null

@@ -17,7 +17,7 @@ const formSchema = Yup.object().shape({
     .max(500, "Too Long!")
     .required("Required"),
   location: Yup.string()
-    .min(10, "Too Short!")
+    .min(5, "Too Short!")
     .max(100, "Too Long!")
     .required("Required"),
   date: Yup.string().required("Required"),
@@ -41,9 +41,6 @@ export default function Eventsform({
     from: { opacity: 0 },
   }));
 
-  const setformValue = (field, value) =>
-    setformValues((old) => ({ ...old, [field]: value }));
-
   useEffect(() => {
     setformValues(initialFormValues);
   }, [initialFormValues]);
@@ -57,9 +54,9 @@ export default function Eventsform({
     });
   }
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    onSubmit(formValues);
+  const handleSubmit = (values) => {
+    setformValues(values);
+    onSubmit(values);
     setformValues(defaultFormValues);
   };
 
@@ -74,9 +71,22 @@ export default function Eventsform({
         <Formik
           initialValues={formValues}
           validationSchema={formSchema}
-          onSubmit={handleSubmit}
+          onSubmit={(values, { resetForm, setSubmitting }) => {
+            setSubmitting(true);
+            handleSubmit(values);
+            setSubmitting(false);
+            resetForm();
+          }}
         >
-          {({ errors, touched, handleBlur, handleSubmit, isSubmitting }) => (
+          {({
+            values,
+            errors,
+            touched,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+            isSubmitting,
+          }) => (
             <Form onSubmit={handleSubmit}>
               {errors.title && touched.title ? (
                 <div className="error-text">{errors.title}</div>
@@ -86,8 +96,8 @@ export default function Eventsform({
                 label="Title"
                 type="text"
                 text="Enter the name of the Event"
-                value={formValues.title}
-                onChange={(e) => setformValue("title", e.target.value)}
+                value={values.title}
+                onChange={handleChange("title")}
                 onBlur={handleBlur}
                 className={errors.title && touched.title ? "error" : null}
               />
@@ -100,8 +110,8 @@ export default function Eventsform({
                 label="Description"
                 type="text"
                 text="Enter brief information (as well as time)"
-                value={formValues.description}
-                onChange={(e) => setformValue("description", e.target.value)}
+                value={values.description}
+                onChange={handleChange("description")}
                 onBlur={handleBlur}
                 className={
                   errors.description && touched.description ? "error" : null
@@ -116,8 +126,8 @@ export default function Eventsform({
                 label="Location"
                 type="text"
                 text="Enter Location of the Event"
-                value={formValues.location}
-                onChange={(e) => setformValue("location", e.target.value)}
+                value={values.location}
+                onChange={handleChange("location")}
                 onBlur={handleBlur}
                 className={errors.location && touched.location ? "error" : null}
               />
@@ -130,8 +140,8 @@ export default function Eventsform({
                 label="Date"
                 type="text"
                 text="Enter Date (format: mm/dd/year)"
-                value={formValues.date}
-                onChange={(e) => setformValue("date", e.target.value)}
+                value={values.date}
+                onChange={handleChange("date")}
                 onBlur={handleBlur}
                 className={errors.date && touched.date ? "error" : null}
               />
@@ -144,6 +154,7 @@ export default function Eventsform({
                 type="button"
                 className="cancelBtn"
                 onClick={handleCancel}
+                disabled={isSubmitting}
               >
                 Cancel
               </button>

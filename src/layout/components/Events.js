@@ -64,17 +64,17 @@ export default function Events() {
   }
 
   async function handleDelete(id) {
-    await deleteEvent(id);
+    await deleteEvent(id, token);
     mutate("eventData");
   }
 
   async function handleAdd(formValues) {
-    await addEvent(formValues);
+    await addEvent(formValues, token);
     mutate("eventData");
   }
 
   async function handleEdit(formValues) {
-    await updateEvent(formValues);
+    await updateEvent(formValues, token);
     mutate("eventData");
     toggleEditForm(false);
   }
