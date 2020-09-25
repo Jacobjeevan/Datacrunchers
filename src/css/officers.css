@@ -18,25 +18,37 @@
   padding: 5px 25px 0px 25px;
 }
 
-.title {
+.officer-name {
   text-align: center;
 }
 
-.description {
-  margin-top: 10px;
-  margin-bottom: 5px;
+.officer-title {
+  text-align: center;
+  font-size: small;
+}
+
+.officer-description {
+  margin-top: 0px;
+  margin-bottom: 0px;
   flex-grow: 3;
   text-align: center;
+  font-size: small;
 }
 
-.authors {
+.officer-email {
   margin-top: 5px;
   margin-bottom: 10px;
   text-align: center;
+  font-size: small;
 }
 
-.github {
-  text-align: center;
+.officer-headshot {
+  border-radius: 20px;
+  border: 1px solid beige;
+  width: 100px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cardBtn-container {

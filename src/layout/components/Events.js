@@ -113,10 +113,12 @@ export default function Events() {
         {data.map((event) => (
           <div key={event._id} className="event">
             <div className="event-meta">
-              <div className="title">{event.title}</div>
-              <div className="description">{event.description}</div>
-              <div className="location">{event.location}</div>
-              <div className="date">{event.date}</div>
+              <div className="event-title">{event.title}</div>
+              <div className="event-description">{event.description}</div>
+              <div className="event-location">{event.location}</div>
+              <div className="event-date">
+                {new Date(event.date).toDateString()}
+              </div>
             </div>
             <div className="cardBtn-container">
               <button

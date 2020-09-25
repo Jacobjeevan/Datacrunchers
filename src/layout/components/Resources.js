@@ -108,8 +108,8 @@ export default function Resources() {
         {data.map((resource) => (
           <div key={resource._id} className="resource">
             <div className="resource-meta">
-              <div className="title">{resource.title}</div>
-              <div className="description">{resource.description}</div>
+              <div className="resource-title">{resource.title}</div>
+              <div className="resource-description">{resource.description}</div>
             </div>
             {isAuthenticated && (
               <div className="cardBtn-container">

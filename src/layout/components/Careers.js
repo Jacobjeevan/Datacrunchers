@@ -108,8 +108,8 @@ export default function Careers() {
         {data.map((career) => (
           <div key={career._id} className="career">
             <div className="career-meta">
-              <div className="title">{career.title}</div>
-              <div className="description">{career.description}</div>
+              <div className="career-title">{career.title}</div>
+              <div className="career-description">{career.description}</div>
             </div>
             {isAuthenticated && (
               <div className="cardBtn-container">

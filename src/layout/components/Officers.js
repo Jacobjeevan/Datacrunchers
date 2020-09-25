@@ -123,11 +123,17 @@ export default function Officers() {
         {data.map((officer) => (
           <div key={officer._id} className="officer">
             <div className="officer-meta">
-              <div className="name">{officer.name}</div>
-              <div className="title">{officer.title}</div>
-              <div className="description">{officer.description}</div>
-              <div className="email">{officer.email}</div>
-              <img src={officer.imageDest} alt={officer.name} />
+              <img
+                src={officer.imageDest}
+                alt={officer.name}
+                className="officer-headshot"
+              />
+              <div className="officer-name">{officer.name}</div>
+              <div className="officer-title">Position: {officer.title}</div>
+              <div className="officer-description">
+                About: {officer.description}
+              </div>
+              <div className="officer-email">Contact: {officer.email}</div>
             </div>
             <div className="cardBtn-container">
               <button

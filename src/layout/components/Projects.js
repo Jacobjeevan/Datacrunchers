@@ -112,10 +112,10 @@ export default function Projects() {
         {data.map((project) => (
           <div key={project._id} className="project">
             <div className="project-meta">
-              <div className="title">{project.title}</div>
-              <div className="description">{project.description}</div>
-              <div className="authors">{project.authors}</div>
-              <div className="github">{project.github}</div>
+              <div className="project-title">{project.title}</div>
+              <div className="project-description">{project.description}</div>
+              <div className="project-authors">{project.authors}</div>
+              <div className="project-github">{project.github}</div>
             </div>
             {isAuthenticated && (
               <div className="cardBtn-container">
