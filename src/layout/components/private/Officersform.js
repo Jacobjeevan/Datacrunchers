@@ -1,18 +1,18 @@
 import React from "react";
-import FormField from "./Formfield";
 import "../../../css/officersform.css";
-import Form from "react-bootstrap/Form";
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
-import { Formik } from "formik";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers";
 import * as Yup from "yup";
-import { FormFile } from "react-bootstrap";
+import { FormField } from "./FormField";
 
 const formSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, "Too Short!")
     .max(100, "Too Long!")
     .required("Required"),
+  imageName: Yup.mixed().required("Image is Required"),
   title: Yup.string()
     .min(2, "Too Short!")
     .max(100, "Too Long!")
@@ -22,7 +22,6 @@ const formSchema = Yup.object().shape({
     .max(500, "Too Long!")
     .required("Required"),
   email: Yup.string().email().required("Required"),
-  imageName: Yup.string().required("Required"),
 });
 
 const defaultFormValues = {
@@ -60,9 +59,13 @@ export default function Officersform({
     });
   }
 
-  const handleSubmit = (evt) => {
-    evt.profficerDefault();
-    onSubmit(formValues);
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(formSchema),
+  });
+
+  const callSubmit = (values) => {
+    setformValues(values);
+    onSubmit(values);
     setformValues(defaultFormValues);
   };
 
@@ -70,100 +73,75 @@ export default function Officersform({
     changeEffect();
     setTimeout(() => toggle(), 200);
   };
+
   return (
     <animated.div style={props}>
       <div className="formContent">
-        <Formik
-          initialValues={formValues}
-          validationSchema={formSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ errors, touched, handleBlur, handleSubmit, isSubmitting }) => (
-            <Form onSubmit={handleSubmit}>
-              {errors.name && touched.name ? (
-                <div className="error-text">{errors.name}</div>
-              ) : null}
-              <FormField
-                control="OfficerName"
-                label="Name"
-                type="text"
-                text="Enter the name of the Officer"
-                value={formValues.name}
-                onChange={(e) => setformValue("name", e.target.value)}
-                onBlur={handleBlur}
-                className={errors.name && touched.name ? "error" : null}
-              />
+        <form onSubmit={handleSubmit(callSubmit)}>
+          <FormField
+            label="Name"
+            type="text"
+            name="name"
+            text="Enter Officer's name"
+            value={formValues.name}
+            ref={register}
+            onChange={(e) => setformValue("name", e.target.value)}
+            className={errors.name ? "error" : null}
+            errorMessage={errors.name?.message}
+          />
 
-              {errors.title && touched.title ? (
-                <div className="error-text">{errors.title}</div>
-              ) : null}
-              <FormField
-                control="OfficerTitle"
-                label="Title"
-                type="text"
-                text="Enter the Title/Position of the Officer"
-                value={formValues.title}
-                onChange={(e) => setformValue("title", e.target.value)}
-                onBlur={handleBlur}
-                className={errors.title && touched.title ? "error" : null}
-              />
+          <FormField
+            label="Title"
+            type="text"
+            name="title"
+            text="Enter Event Title"
+            value={formValues.title}
+            ref={register}
+            onChange={(e) => setformValue("title", e.target.value)}
+            className={errors.title ? "error" : null}
+            errorMessage={errors.title?.message}
+          />
 
-              {errors.description && touched.description ? (
-                <div className="error-text">{errors.description}</div>
-              ) : null}
-              <FormField
-                control="OfficerDesc"
-                label="Description"
-                type="text"
-                text="Enter brief description (major/dept) about the officer"
-                value={formValues.description}
-                onChange={(e) => setformValue("description", e.target.value)}
-                onBlur={handleBlur}
-                className={
-                  errors.description && touched.description ? "error" : null
-                }
-              />
+          <FormField
+            label="Description"
+            type="text"
+            name="description"
+            text="Enter a brief description about Officer (Major/Dept)"
+            value={formValues.description}
+            ref={register}
+            onChange={(e) => setformValue("description", e.target.value)}
+            className={errors.description ? "error" : null}
+            errorMessage={errors.description?.message}
+          />
 
-              {errors.location && touched.location ? (
-                <div className="error-text">{errors.location}</div>
-              ) : null}
+          <FormField
+            label="Email"
+            type="text"
+            name="email"
+            text="Enter Officer's Email"
+            value={formValues.email}
+            ref={register}
+            onChange={(e) => setformValue("email", e.target.value)}
+            className={errors.email ? "error" : null}
+            errorMessage={errors.email?.message}
+          />
 
-              {errors.email && touched.email ? (
-                <div className="error-text">{errors.email}</div>
-              ) : null}
-              <FormField
-                control="OfficerEmail"
-                label="Email"
-                type="text"
-                text="Enter Officer's Email"
-                value={formValues.email}
-                onChange={(e) => setformValue("email", e.target.value)}
-                onBlur={handleBlur}
-                className={errors.email && touched.email ? "error" : null}
-              />
+          <label className="form-label">Officer's headshot: </label>
+          <input
+            name="imageName"
+            type="file"
+            ref={register}
+            onChange={(e) => setformValue("imageName", e.target.value)}
+          />
+          <p>{errors.imageName?.message}</p>
+          <button type="submit" className="submitBtn">
+            Submit
+          </button>
 
-              {errors.imageName && touched.imageName ? (
-                <div className="error-text">{errors.imageName}</div>
-              ) : null}
-              <FormFile label="imageName">
-                <FormFile.Label>Upload Officer's Photo</FormFile.Label>
-                <FormFile.Input />
-              </FormFile>
-
-              <button type="submit" className="submitBtn">
-                Submit
-              </button>
-
-              <button
-                type="button"
-                className="cancelBtn"
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
-            </Form>
-          )}
-        </Formik>
+          <button type="button" className="cancelBtn" onClick={handleCancel}>
+            Cancel
+          </button>
+        </form>
       </div>
     </animated.div>
   );

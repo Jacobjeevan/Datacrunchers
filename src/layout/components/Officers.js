@@ -65,17 +65,25 @@ export default function Officers() {
   }
 
   async function handleDelete(id) {
-    await deleteOfficer(id);
+    await deleteOfficer(id, token);
     mutate("officerData");
   }
 
   async function handleAdd(formValues) {
-    await addOfficer(formValues);
+    var formBody = new FormData();
+    for (const [key, value] of Object.entries(formValues)) {
+      if (key !== "imageName") {
+        formBody.append(key, value);
+      } else {
+        formBody.append("imageName", formValues.imageName[0]);
+      }
+    }
+    await addOfficer(formBody, token);
     mutate("officerData");
   }
 
   async function handleEdit(formValues) {
-    await updateOfficer(formValues);
+    await updateOfficer(formValues, token);
     mutate("officerData");
     toggleEditForm(false);
   }
@@ -119,7 +127,7 @@ export default function Officers() {
               <div className="title">{officer.title}</div>
               <div className="description">{officer.description}</div>
               <div className="email">{officer.email}</div>
-              <img src={officer.imageName} />
+              <img src={officer.imageDest} alt={officer.name} />
             </div>
             <div className="cardBtn-container">
               <button
