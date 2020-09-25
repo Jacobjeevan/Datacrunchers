@@ -1,11 +1,11 @@
 import React from "react";
-import FormField from "./Formfield";
 import "../../../css/projectsform.css";
-import Form from "react-bootstrap/Form";
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
-import { Formik } from "formik";
+import { yupResolver } from "@hookform/resolvers";
 import * as Yup from "yup";
+import { useForm } from "react-hook-form";
+import { FormField } from "./FormField";
 
 const formSchema = Yup.object().shape({
   title: Yup.string()
@@ -44,6 +44,9 @@ export default function Projectsform({
     from: { opacity: 0 },
   }));
 
+  const setformValue = (field, value) =>
+    setformValues((old) => ({ ...old, [field]: value }));
+
   useEffect(() => {
     setformValues(initialFormValues);
   }, [initialFormValues]);
@@ -57,7 +60,11 @@ export default function Projectsform({
     });
   }
 
-  const handleSubmit = (values) => {
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(formSchema),
+  });
+
+  const callSubmit = (values) => {
     setformValues(values);
     onSubmit(values);
     setformValues(defaultFormValues);
@@ -71,102 +78,62 @@ export default function Projectsform({
   return (
     <animated.div style={props}>
       <div className="formContent">
-        <Formik
-          initialValues={formValues}
-          validationSchema={formSchema}
-          onSubmit={(values, { resetForm, setSubmitting }) => {
-            setSubmitting(true);
-            handleSubmit(values);
-            setSubmitting(false);
-            resetForm();
-          }}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleBlur,
-            handleSubmit,
-            handleChange,
-            isSubmitting,
-          }) => (
-            <Form onSubmit={handleSubmit}>
-              {errors.title && touched.title ? (
-                <div className="error-text">{errors.title}</div>
-              ) : null}
-              <FormField
-                control="ProjectTitle"
-                label="Title"
-                type="text"
-                text="Enter the name of the Project"
-                value={values.title}
-                onChange={handleChange("title")}
-                onBlur={handleBlur}
-                className={errors.title && touched.title ? "error" : null}
-              />
+        <form onSubmit={handleSubmit(callSubmit)}>
+          <FormField
+            label="Title"
+            type="text"
+            name="title"
+            text="Enter Project Title"
+            value={formValues.title}
+            ref={register}
+            onChange={(e) => setformValue("title", e.target.value)}
+            className={errors.title ? "error" : null}
+            errorMessage={errors.title?.message}
+          />
+          <FormField
+            label="Description"
+            type="text"
+            name="description"
+            text="Enter Brief Description about the Project"
+            value={formValues.description}
+            ref={register}
+            onChange={(e) => setformValue("description", e.target.value)}
+            className={errors.description ? "error" : null}
+            errorMessage={errors.description?.message}
+          />
 
-              {errors.description && touched.description ? (
-                <div className="error-text">{errors.description}</div>
-              ) : null}
-              <FormField
-                control="ProjectDesc"
-                label="Description"
-                type="text"
-                text="Enter brief information about the Project"
-                value={values.description}
-                onChange={handleChange("description")}
-                onBlur={handleBlur}
-                className={
-                  errors.description && touched.description ? "error" : null
-                }
-              />
+          <FormField
+            label="Authors"
+            type="text"
+            name="authors"
+            text="Enter Name of Authors"
+            value={formValues.authors}
+            ref={register}
+            onChange={(e) => setformValue("authors", e.target.value)}
+            className={errors.authors ? "error" : null}
+            errorMessage={errors.authors?.message}
+          />
 
-              {errors.authors && touched.authors ? (
-                <div className="error-text">{errors.authors}</div>
-              ) : null}
-              <FormField
-                control="ProjectAuthor"
-                label="Authors"
-                type="text"
-                text="Enter Name of Authors"
-                value={values.authors}
-                onChange={handleChange("authors")}
-                onBlur={handleBlur}
-                className={errors.authors && touched.authors ? "error" : null}
-              />
+          <FormField
+            label="Github"
+            type="text"
+            name="github"
+            text="Enter Link to the Project"
+            value={formValues.github}
+            ref={register}
+            onChange={(e) => setformValue("github", e.target.value)}
+            className={errors.github ? "error" : null}
+            errorMessage={errors.github?.message}
+          />
 
-              {errors.github && touched.github ? (
-                <div className="error-text">{errors.github}</div>
-              ) : null}
-              <FormField
-                control="ProjectLink"
-                label="Github"
-                type="text"
-                text="Enter Link to the Project"
-                value={values.github}
-                onChange={handleChange("github")}
-                onBlur={handleBlur}
-                className={errors.github && touched.github ? "error" : null}
-              />
+          <button type="submit" className="submitBtn">
+            Submit
+          </button>
 
-              <button
-                type="submit"
-                className="submitBtn"
-                disabled={isSubmitting}
-              >
-                Submit
-              </button>
-
-              <button
-                type="button"
-                className="cancelBtn"
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
-            </Form>
-          )}
-        </Formik>
+          <button type="button" className="cancelBtn" onClick={handleCancel}>
+            Cancel
+          </button>
+        </form>
       </div>
     </animated.div>
   );

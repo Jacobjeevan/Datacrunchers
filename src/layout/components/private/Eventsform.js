@@ -1,11 +1,11 @@
 import React from "react";
-import FormField from "./Formfield";
 import "../../../css/eventsform.css";
-import Form from "react-bootstrap/Form";
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
-import { Formik } from "formik";
+import { yupResolver } from "@hookform/resolvers";
 import * as Yup from "yup";
+import { useForm } from "react-hook-form";
+import { FormField } from "./FormField";
 
 const formSchema = Yup.object().shape({
   title: Yup.string()
@@ -41,6 +41,9 @@ export default function Eventsform({
     from: { opacity: 0 },
   }));
 
+  const setformValue = (field, value) =>
+    setformValues((old) => ({ ...old, [field]: value }));
+
   useEffect(() => {
     setformValues(initialFormValues);
   }, [initialFormValues]);
@@ -54,7 +57,11 @@ export default function Eventsform({
     });
   }
 
-  const handleSubmit = (values) => {
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(formSchema),
+  });
+
+  const callSubmit = (values) => {
     setformValues(values);
     onSubmit(values);
     setformValues(defaultFormValues);
@@ -68,99 +75,63 @@ export default function Eventsform({
   return (
     <animated.div style={props}>
       <div className="formContent">
-        <Formik
-          initialValues={formValues}
-          validationSchema={formSchema}
-          onSubmit={(values, { resetForm, setSubmitting }) => {
-            setSubmitting(true);
-            handleSubmit(values);
-            setSubmitting(false);
-            resetForm();
-          }}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleBlur,
-            handleChange,
-            handleSubmit,
-            isSubmitting,
-          }) => (
-            <Form onSubmit={handleSubmit}>
-              {errors.title && touched.title ? (
-                <div className="error-text">{errors.title}</div>
-              ) : null}
-              <FormField
-                control="EventTitle"
-                label="Title"
-                type="text"
-                text="Enter the name of the Event"
-                value={values.title}
-                onChange={handleChange("title")}
-                onBlur={handleBlur}
-                className={errors.title && touched.title ? "error" : null}
-              />
+        <form onSubmit={handleSubmit(callSubmit)}>
+          <FormField
+            label="Title"
+            type="text"
+            name="title"
+            text="Enter Event Title"
+            value={formValues.title}
+            ref={register}
+            onChange={(e) => setformValue("title", e.target.value)}
+            className={errors.title ? "error" : null}
+            errorMessage={errors.title?.message}
+          />
 
-              {errors.description && touched.description ? (
-                <div className="error-text">{errors.description}</div>
-              ) : null}
-              <FormField
-                control="EventDesc"
-                label="Description"
-                type="text"
-                text="Enter brief information (as well as time)"
-                value={values.description}
-                onChange={handleChange("description")}
-                onBlur={handleBlur}
-                className={
-                  errors.description && touched.description ? "error" : null
-                }
-              />
+          <FormField
+            label="Description"
+            type="text"
+            name="description"
+            text="Enter a brief description about Event"
+            value={formValues.description}
+            ref={register}
+            onChange={(e) => setformValue("description", e.target.value)}
+            className={errors.description ? "error" : null}
+            errorMessage={errors.description?.message}
+          />
 
-              {errors.location && touched.location ? (
-                <div className="error-text">{errors.location}</div>
-              ) : null}
-              <FormField
-                control="EventLocation"
-                label="Location"
-                type="text"
-                text="Enter Location of the Event"
-                value={values.location}
-                onChange={handleChange("location")}
-                onBlur={handleBlur}
-                className={errors.location && touched.location ? "error" : null}
-              />
+          <FormField
+            label="Location"
+            type="text"
+            name="location"
+            text="Enter Location of the Event"
+            value={formValues.location}
+            ref={register}
+            onChange={(e) => setformValue("location", e.target.value)}
+            className={errors.location ? "error" : null}
+            errorMessage={errors.location?.message}
+          />
 
-              {errors.date && touched.date ? (
-                <div className="error-text">{errors.date}</div>
-              ) : null}
-              <FormField
-                control="EventDate"
-                label="Date"
-                type="text"
-                text="Enter Date (format: mm/dd/year)"
-                value={values.date}
-                onChange={handleChange("date")}
-                onBlur={handleBlur}
-                className={errors.date && touched.date ? "error" : null}
-              />
+          <FormField
+            label="Date"
+            type="text"
+            name="date"
+            text="Enter Date (format: mm/dd/year)"
+            value={formValues.date}
+            ref={register}
+            onChange={(e) => setformValue("date", e.target.value)}
+            className={errors.date ? "error" : null}
+            errorMessage={errors.date?.message}
+          />
 
-              <button type="submit" className="submitBtn">
-                Submit
-              </button>
+          <button type="submit" className="submitBtn">
+            Submit
+          </button>
 
-              <button
-                type="button"
-                className="cancelBtn"
-                onClick={handleCancel}
-                disabled={isSubmitting}
-              >
-                Cancel
-              </button>
-            </Form>
-          )}
-        </Formik>
+          <button type="button" className="cancelBtn" onClick={handleCancel}>
+            Cancel
+          </button>
+        </form>
       </div>
     </animated.div>
   );
