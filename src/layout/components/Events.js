@@ -130,20 +130,22 @@ export default function Events() {
                 {new Date(event.date).toDateString()}
               </div>
             </div>
-            <div className="cardBtn-container">
-              <button
-                className="editBtn cardBtn"
-                onClick={handleEditButton.bind(this, event)}
-              >
-                Edit
-              </button>
-              <button
-                onClick={handleDelete.bind(this, event._id)}
-                className="deleteBtn cardBtn"
-              >
-                Delete
-              </button>
-            </div>
+            {isAuthenticated && (
+              <div className="cardBtn-container">
+                <button
+                  className="editBtn cardBtn"
+                  onClick={handleEditButton.bind(this, event)}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={handleDelete.bind(this, event._id)}
+                  className="deleteBtn cardBtn"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
           </div>
         ))}
       </div>

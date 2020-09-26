@@ -135,20 +135,22 @@ export default function Officers() {
               </div>
               <div className="officer-email">Contact: {officer.email}</div>
             </div>
-            <div className="cardBtn-container">
-              <button
-                className="editBtn cardBtn"
-                onClick={handleEditButton.bind(this, officer)}
-              >
-                Edit
-              </button>
-              <button
-                onClick={handleDelete.bind(this, officer._id)}
-                className="deleteBtn cardBtn"
-              >
-                Delete
-              </button>
-            </div>
+            {isAuthenticated && (
+              <div className="cardBtn-container">
+                <button
+                  className="editBtn cardBtn"
+                  onClick={handleEditButton.bind(this, officer)}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={handleDelete.bind(this, officer._id)}
+                  className="deleteBtn cardBtn"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
           </div>
         ))}
       </div>
