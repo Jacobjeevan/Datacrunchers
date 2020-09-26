@@ -78,3 +78,13 @@
 .editBtn:hover {
   background-color: #3498db;
 }
+
+.viewBtn {
+  background-color: #57bd13;
+  color: white;
+  font-weight: 300;
+}
+
+.viewBtn:hover {
+  background-color: #11a040;
+}

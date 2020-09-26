@@ -10,6 +10,7 @@ import "../../css/events.css";
 import { useState } from "react";
 import { mutate } from "swr";
 import { useAuth0 } from "@auth0/auth0-react";
+import LinkButton from "./LinkButton";
 
 const defaultFormValues = {
   title: "",
@@ -124,28 +125,35 @@ export default function Events() {
           <div key={event._id} className="event">
             <div className="event-meta">
               <div className="event-title">{event.title}</div>
-              <div className="event-description">{event.description}</div>
               <div className="event-location">{event.location}</div>
               <div className="event-date">
                 {new Date(event.date).toDateString()}
               </div>
             </div>
-            {isAuthenticated && (
-              <div className="cardBtn-container">
-                <button
-                  className="editBtn cardBtn"
-                  onClick={handleEditButton.bind(this, event)}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={handleDelete.bind(this, event._id)}
-                  className="deleteBtn cardBtn"
-                >
-                  Delete
-                </button>
-              </div>
-            )}
+            <div className="cardBtn-container">
+              <LinkButton
+                to={`events/${event._id}`}
+                className="viewBtn cardBtn"
+              >
+                View Details
+              </LinkButton>
+              {isAuthenticated && (
+                <div>
+                  <button
+                    className="editBtn cardBtn"
+                    onClick={handleEditButton.bind(this, event)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={handleDelete.bind(this, event._id)}
+                    className="deleteBtn cardBtn"
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>
