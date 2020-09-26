@@ -52,3 +52,9 @@ export async function updateResource(body, token) {
   );
   return res.data;
 }
+export async function getResourceById(id) {
+  const res = await axios.get(
+    `${process.env.REACT_APP_API_URL}resources/${id}`
+  );
+  return res.data;
+}

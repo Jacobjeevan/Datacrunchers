@@ -52,3 +52,7 @@ export async function updateProject(body, token) {
   );
   return res.data;
 }
+export async function getProjectById(id) {
+  const res = await axios.get(`${process.env.REACT_APP_API_URL}projects/${id}`);
+  return res.data;
+}

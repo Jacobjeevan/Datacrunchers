@@ -52,3 +52,8 @@ export async function updateCareer(body, token) {
   );
   return res.data;
 }
+
+export async function getCareerById(id) {
+  const res = await axios.get(`${process.env.REACT_APP_API_URL}careers/${id}`);
+  return res.data;
+}
