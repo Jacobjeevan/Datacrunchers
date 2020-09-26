@@ -2,7 +2,7 @@ import React from "react";
 import "../../../css/formfield.css";
 
 export const FormField = React.forwardRef((props, ref) => (
-  <div class="form-element">
+  <div className="form-element">
     <label className="form-label">{props.label} </label>
     <p className="error-message">{props.errorMessage}</p>
     <input

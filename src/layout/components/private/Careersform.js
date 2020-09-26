@@ -54,9 +54,8 @@ export default function Careersform({
     resolver: yupResolver(formSchema),
   });
 
-  const callSubmit = (values) => {
-    setformValues(values);
-    onSubmit(values);
+  const callSubmit = () => {
+    onSubmit(formValues);
     setformValues(defaultFormValues);
   };
 

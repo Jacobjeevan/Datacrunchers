@@ -20,7 +20,7 @@ const formSchema = Yup.object().shape({
     .min(5, "Too Short!")
     .max(100, "Too Long!")
     .required("Required"),
-  date: Yup.string().required("Required"),
+  date: Yup.date().required("Required"),
 });
 
 const defaultFormValues = {
@@ -61,9 +61,8 @@ export default function Eventsform({
     resolver: yupResolver(formSchema),
   });
 
-  const callSubmit = (values) => {
-    setformValues(values);
-    onSubmit(values);
+  const callSubmit = () => {
+    onSubmit(formValues);
     setformValues(defaultFormValues);
   };
 
