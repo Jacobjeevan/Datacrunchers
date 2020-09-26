@@ -95,7 +95,7 @@ export default function Events() {
     let givenDate = new Date(date);
     let month = givenDate.getMonth();
     let year = givenDate.getFullYear();
-    let day = givenDate.getUTCDay();
+    let day = givenDate.getUTCDate();
     givenDate = month + "/" + day + "/" + year;
     return givenDate;
   }
