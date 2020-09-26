@@ -80,14 +80,24 @@ export default function Events() {
   }
 
   function handleEditButton(event) {
+    let date = getDateInFormat(event.date);
     setformValues({
       id: event._id,
       title: event.title,
       description: event.description,
       location: event.location,
-      date: event.date,
+      date,
     });
     toggleEditForm();
+  }
+
+  function getDateInFormat(date) {
+    let givenDate = new Date(date);
+    let month = givenDate.getMonth();
+    let year = givenDate.getFullYear();
+    let day = givenDate.getUTCDay();
+    givenDate = month + "/" + day + "/" + year;
+    return givenDate;
   }
 
   return (
