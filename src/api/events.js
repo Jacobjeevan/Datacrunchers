@@ -50,3 +50,8 @@ export async function updateEvent(body, token) {
   );
   return res.data;
 }
+
+export async function getEventById(id) {
+  const res = await axios.get(`${process.env.REACT_APP_API_URL}events/${id}`);
+  return res.data;
+}
