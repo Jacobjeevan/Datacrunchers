@@ -11,6 +11,7 @@ import { useState } from "react";
 import { mutate } from "swr";
 import { useAuth0 } from "@auth0/auth0-react";
 import LinkButton from "./LinkButton";
+import { useRouteMatch } from "react-router-dom";
 
 const defaultFormValues = {
   title: "",
@@ -31,6 +32,7 @@ export default function Events() {
   const { isLoading, data, error } = useGetEvents();
 
   let token;
+  let { url } = useRouteMatch();
 
   async function getToken() {
     try {
@@ -132,7 +134,7 @@ export default function Events() {
             </div>
             <div className="cardBtn-container">
               <LinkButton
-                to={`events/${event._id}`}
+                to={`${url}/${event._id}`}
                 className="viewBtn cardBtn"
               >
                 View Details

@@ -10,6 +10,8 @@ import "../../css/careers.css";
 import { useState } from "react";
 import { mutate } from "swr";
 import { useAuth0 } from "@auth0/auth0-react";
+import LinkButton from "./LinkButton";
+import { useRouteMatch } from "react-router-dom";
 
 const defaultFormValues = {
   title: "",
@@ -27,6 +29,7 @@ export default function Careers() {
   const [formValues, setformValues] = useState(defaultFormValues);
   const { isLoading, data, error } = useGetCareers();
   let token;
+  let { url } = useRouteMatch();
 
   async function getToken() {
     try {
@@ -109,24 +112,31 @@ export default function Careers() {
           <div key={career._id} className="career">
             <div className="career-meta">
               <div className="career-title">{career.title}</div>
-              <div className="career-description">{career.description}</div>
             </div>
-            {isAuthenticated && (
-              <div className="cardBtn-container">
-                <button
-                  className="editBtn cardBtn"
-                  onClick={handleEditButton.bind(this, career)}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={handleDelete.bind(this, career._id)}
-                  className="deleteBtn cardBtn"
-                >
-                  Delete
-                </button>
-              </div>
-            )}
+            <div className="cardBtn-container">
+              <LinkButton
+                to={`${url}/${career._id}`}
+                className="viewBtn cardBtn"
+              >
+                View Details
+              </LinkButton>
+              {isAuthenticated && (
+                <div>
+                  <button
+                    className="editBtn cardBtn"
+                    onClick={handleEditButton.bind(this, career)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={handleDelete.bind(this, career._id)}
+                    className="deleteBtn cardBtn"
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>

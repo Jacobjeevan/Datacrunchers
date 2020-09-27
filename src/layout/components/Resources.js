@@ -10,6 +10,8 @@ import "../../css/resources.css";
 import { useState } from "react";
 import { mutate } from "swr";
 import { useAuth0 } from "@auth0/auth0-react";
+import LinkButton from "./LinkButton";
+import { useRouteMatch } from "react-router-dom";
 
 const defaultFormValues = {
   title: "",
@@ -27,6 +29,7 @@ export default function Resources() {
   const [formValues, setformValues] = useState(defaultFormValues);
   const { isLoading, data, error } = useGetResources();
   let token;
+  let { url } = useRouteMatch();
 
   async function getToken() {
     try {
@@ -109,24 +112,31 @@ export default function Resources() {
           <div key={resource._id} className="resource">
             <div className="resource-meta">
               <div className="resource-title">{resource.title}</div>
-              <div className="resource-description">{resource.description}</div>
             </div>
-            {isAuthenticated && (
-              <div className="cardBtn-container">
-                <button
-                  className="editBtn cardBtn"
-                  onClick={handleEditButton.bind(this, resource)}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={handleDelete.bind(this, resource._id)}
-                  className="deleteBtn cardBtn"
-                >
-                  Delete
-                </button>
-              </div>
-            )}
+            <div className="cardBtn-container">
+              <LinkButton
+                to={`${url}/${resource._id}`}
+                className="viewBtn cardBtn"
+              >
+                View Details
+              </LinkButton>
+              {isAuthenticated && (
+                <div>
+                  <button
+                    className="editBtn cardBtn"
+                    onClick={handleEditButton.bind(this, resource)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={handleDelete.bind(this, resource._id)}
+                    className="deleteBtn cardBtn"
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>

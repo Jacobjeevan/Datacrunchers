@@ -10,6 +10,8 @@ import "../../css/projects.css";
 import { useState } from "react";
 import { mutate } from "swr";
 import { useAuth0 } from "@auth0/auth0-react";
+import LinkButton from "./LinkButton";
+import { useRouteMatch } from "react-router-dom";
 
 const defaultFormValues = {
   title: "",
@@ -29,6 +31,7 @@ export default function Projects() {
   const [formValues, setformValues] = useState(defaultFormValues);
   const { isLoading, data, error } = useGetProjects();
   let token;
+  let { url } = useRouteMatch();
 
   async function getToken() {
     try {
@@ -113,26 +116,33 @@ export default function Projects() {
           <div key={project._id} className="project">
             <div className="project-meta">
               <div className="project-title">{project.title}</div>
-              <div className="project-description">{project.description}</div>
               <div className="project-authors">{project.authors}</div>
               <div className="project-github">{project.github}</div>
             </div>
-            {isAuthenticated && (
-              <div className="cardBtn-container">
-                <button
-                  className="editBtn cardBtn"
-                  onClick={handleEditButton.bind(this, project)}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={handleDelete.bind(this, project._id)}
-                  className="deleteBtn cardBtn"
-                >
-                  Delete
-                </button>
-              </div>
-            )}
+            <div className="cardBtn-container">
+              <LinkButton
+                to={`${url}/${project._id}`}
+                className="viewBtn cardBtn"
+              >
+                View Details
+              </LinkButton>
+              {isAuthenticated && (
+                <div>
+                  <button
+                    className="editBtn cardBtn"
+                    onClick={handleEditButton.bind(this, project)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={handleDelete.bind(this, project._id)}
+                    className="deleteBtn cardBtn"
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>
