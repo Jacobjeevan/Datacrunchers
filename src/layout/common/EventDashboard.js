@@ -1,19 +1,18 @@
-import React, { Fragment } from "react";
+import React from "react";
+import { Route, useRouteMatch, Switch } from "react-router-dom";
 import Events from "../components/Events";
-import { Route } from "react-router-dom";
 import EventDetail from "../components/detail/EventDetail";
 
 export default function EventDashboard() {
+  let { path } = useRouteMatch();
   return (
-    <Fragment>
-      <div className="dashboard-body">
-        <Route exact path="/events">
-          <Events />
-        </Route>
-        <Route exact path="/events/:eventid">
-          <EventDetail />
-        </Route>
-      </div>
-    </Fragment>
+    <Switch>
+      <Route exact path={path}>
+        <Events />
+      </Route>
+      <Route exact path={`${path}/:eventid`}>
+        <EventDetail />
+      </Route>
+    </Switch>
   );
 }
