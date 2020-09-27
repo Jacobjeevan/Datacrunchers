@@ -9,6 +9,7 @@ export default function EventDetail() {
   useEffect(() => {
     async function getEvent() {
       let event = await getEventById(eventid);
+      console.log(event);
       setevent(event);
     }
     getEvent();
