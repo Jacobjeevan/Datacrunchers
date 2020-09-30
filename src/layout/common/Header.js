@@ -1,14 +1,23 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
 import "../../css/header.css";
-import { withAuth0 } from "@auth0/auth0-react";
+import { AuthContext } from "./Auth";
+import { logoutUser } from "../../api/users";
+import { Button } from "react-bootstrap";
 
 class Header extends Component {
   render() {
-    const { loginWithRedirect, isAuthenticated, logout } = this.props.auth0;
+    const { user, setUser } = this.context;
+
+    async function logout() {
+      await logoutUser();
+      setUser({});
+      localStorage.clear();
+    }
+
     return (
       <div>
         <Container>
@@ -33,20 +42,18 @@ class Header extends Component {
                 </div>
               </Nav>
               <Nav>
-                {isAuthenticated ? (
-                  <Nav.Link
-                    onClick={() => logout({ returnTo: window.location.origin })}
-                  >
-                    Logout
-                  </Nav.Link>
+                {user ? (
+                  <Button onClick={() => logout()}> Logout</Button>
                 ) : (
-                  <Nav.Link
-                    onClick={() => loginWithRedirect({ prompt: "consent" })}
-                  >
-                    Login
-                  </Nav.Link>
+                  <Fragment>
+                    <div className="navbar-item">
+                      <Link to="/login">Login</Link>
+                    </div>
+                    <div className="navbar-item">
+                      <Link to="/register">Register</Link>
+                    </div>
+                  </Fragment>
                 )}
-                <Nav.Link>Register</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Navbar>
@@ -56,4 +63,6 @@ class Header extends Component {
   }
 }
 
-export default withAuth0(Header);
+Header.contextType = AuthContext;
+
+export default Header;

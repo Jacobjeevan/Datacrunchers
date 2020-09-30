@@ -7,6 +7,8 @@ import EventDashboard from "./EventDashboard";
 import ProjectDashboard from "./ProjectDashboard";
 import CareerDashboard from "./CareerDashboard";
 import ResourceDashboard from "./ResourceDashboard";
+import LoginForm from "../components/LoginForm";
+import RegisterForm from "../components/RegisterForm";
 
 export default class Dashboard extends Component {
   render() {
@@ -28,6 +30,12 @@ export default class Dashboard extends Component {
             </Route>
             <Route path="/resources">
               <ResourceDashboard />
+            </Route>
+            <Route path="/login">
+              <LoginForm />
+            </Route>
+            <Route path="/register">
+              <RegisterForm />
             </Route>
           </Switch>
         </div>
