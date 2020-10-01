@@ -18,24 +18,14 @@ export function useGetResources() {
 export async function addResource(body, token) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}resources/add`,
-    body,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    body
   );
   return res.data;
 }
 
 export async function deleteResource(id, token) {
   const res = await axios.delete(
-    `${process.env.REACT_APP_API_URL}resources/delete/${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    `${process.env.REACT_APP_API_URL}resources/delete/${id}`
   );
   return res.data;
 }
@@ -43,12 +33,7 @@ export async function deleteResource(id, token) {
 export async function updateResource(body, token) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}resources/update/${body.id}`,
-    body,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    body
   );
   return res.data;
 }

@@ -18,24 +18,14 @@ export function useGetProjects() {
 export async function addProject(body, token) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}projects/add`,
-    body,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    body
   );
   return res.data;
 }
 
 export async function deleteProject(id, token) {
   const res = await axios.delete(
-    `${process.env.REACT_APP_API_URL}projects/delete/${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    `${process.env.REACT_APP_API_URL}projects/delete/${id}`
   );
   return res.data;
 }
@@ -43,12 +33,7 @@ export async function deleteProject(id, token) {
 export async function updateProject(body, token) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}projects/update/${body.id}`,
-    body,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    body
   );
   return res.data;
 }

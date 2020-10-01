@@ -16,24 +16,14 @@ export function useGetEvents() {
 export async function addEvent(body, token) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}events/add`,
-    body,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    body
   );
   return res.data;
 }
 
 export async function deleteEvent(id, token) {
   const res = await axios.delete(
-    `${process.env.REACT_APP_API_URL}events/delete/${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    `${process.env.REACT_APP_API_URL}events/delete/${id}`
   );
   return res.data;
 }
@@ -41,12 +31,7 @@ export async function deleteEvent(id, token) {
 export async function updateEvent(body, token) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}events/update/${body.id}`,
-    body,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    body
   );
   return res.data;
 }
