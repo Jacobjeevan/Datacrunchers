@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "../../css/header.css";
 import { AuthContext } from "./Auth";
 import { logoutUser } from "../../api/users";
@@ -15,6 +15,7 @@ class Header extends Component {
     async function logout() {
       await logoutUser();
       setUser({});
+      return <Redirect to="/" />;
     }
 
     return (

@@ -25,17 +25,10 @@ const defaultFormDisplay = {
 };
 
 export default function Officers() {
-  const { user } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
   const [displayForm, setdisplayForm] = useState(defaultFormDisplay);
   const [formValues, setformValues] = useState(defaultFormValues);
   const { isLoading, data, error } = useGetOfficers();
-
-  const isAuthenticated = () => {
-    if (user) {
-      return true;
-    }
-    return false;
-  };
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -92,16 +85,16 @@ export default function Officers() {
 
   return (
     <div>
-      {isAuthenticated && (
+      {isAuthenticated() && (
         <button onClick={toggleCreateForm} className="submitBtn">
           Add Officer
         </button>
       )}
 
-      {isAuthenticated && displayForm.createForm ? (
+      {isAuthenticated() && displayForm.createForm ? (
         <Officersform toggle={toggleCreateForm} onSubmit={handleAdd} />
       ) : null}
-      {isAuthenticated && displayForm.editForm ? (
+      {isAuthenticated() && displayForm.editForm ? (
         <Officersform
           toggle={toggleEditForm.bind(null, false)}
           onSubmit={handleEdit}

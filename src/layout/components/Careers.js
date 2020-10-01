@@ -24,7 +24,7 @@ const defaultFormDisplay = {
 };
 
 export default function Careers() {
-  const { user } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
   const [displayForm, setdisplayForm] = useState(defaultFormDisplay);
   const [formValues, setformValues] = useState(defaultFormValues);
   const { isLoading, data, error } = useGetCareers();
@@ -37,13 +37,6 @@ export default function Careers() {
   if (error) {
     return <span>Error: {error}</span>;
   }
-
-  const isAuthenticated = () => {
-    if (user) {
-      return true;
-    }
-    return false;
-  };
 
   function toggleCreateForm() {
     setdisplayForm((old) => ({ ...old, createForm: !displayForm.createForm }));
@@ -81,16 +74,16 @@ export default function Careers() {
 
   return (
     <div>
-      {isAuthenticated && (
+      {isAuthenticated() && (
         <button onClick={toggleCreateForm} className="submitBtn">
           Add Career
         </button>
       )}
 
-      {isAuthenticated && displayForm.createForm ? (
+      {isAuthenticated() && displayForm.createForm ? (
         <Careersform toggle={toggleCreateForm} onSubmit={handleAdd} />
       ) : null}
-      {isAuthenticated && displayForm.editForm ? (
+      {isAuthenticated() && displayForm.editForm ? (
         <Careersform
           toggle={toggleEditForm.bind(null, false)}
           onSubmit={handleEdit}

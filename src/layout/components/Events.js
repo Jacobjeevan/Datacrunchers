@@ -26,19 +26,12 @@ const defaultFormDisplay = {
 };
 
 export default function Events() {
-  const { user } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
   const [displayForm, setdisplayForm] = useState(defaultFormDisplay);
   const [formValues, setformValues] = useState(defaultFormValues);
   const { isLoading, data, error } = useGetEvents();
 
   let { url } = useRouteMatch();
-
-  const isAuthenticated = () => {
-    if (user) {
-      return true;
-    }
-    return false;
-  };
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -96,16 +89,16 @@ export default function Events() {
 
   return (
     <div>
-      {isAuthenticated && (
+      {isAuthenticated() && (
         <button onClick={toggleCreateForm} className="submitBtn">
           Add Event
         </button>
       )}
 
-      {isAuthenticated && displayForm.createForm ? (
+      {isAuthenticated() && displayForm.createForm ? (
         <Eventsform toggle={toggleCreateForm} onSubmit={handleAdd} />
       ) : null}
-      {isAuthenticated && displayForm.editForm ? (
+      {isAuthenticated() && displayForm.editForm ? (
         <Eventsform
           toggle={toggleEditForm.bind(null, false)}
           onSubmit={handleEdit}

@@ -26,18 +26,11 @@ const defaultFormDisplay = {
 };
 
 export default function Projects() {
-  const { user } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
   const [displayForm, setdisplayForm] = useState(defaultFormDisplay);
   const [formValues, setformValues] = useState(defaultFormValues);
   const { isLoading, data, error } = useGetProjects();
   let { url } = useRouteMatch();
-
-  const isAuthenticated = () => {
-    if (user) {
-      return true;
-    }
-    return false;
-  };
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -85,16 +78,16 @@ export default function Projects() {
 
   return (
     <div>
-      {isAuthenticated && (
+      {isAuthenticated() && (
         <button onClick={toggleCreateForm} className="submitBtn">
           Add Project
         </button>
       )}
 
-      {isAuthenticated && displayForm.createForm ? (
+      {isAuthenticated() && displayForm.createForm ? (
         <Projectsform toggle={toggleCreateForm} onSubmit={handleAdd} />
       ) : null}
-      {isAuthenticated && displayForm.editForm ? (
+      {isAuthenticated() && displayForm.editForm ? (
         <Projectsform
           toggle={toggleEditForm.bind(null, false)}
           onSubmit={handleEdit}

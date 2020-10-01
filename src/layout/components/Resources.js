@@ -24,18 +24,11 @@ const defaultFormDisplay = {
 };
 
 export default function Resources() {
-  const { user } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
   const [displayForm, setdisplayForm] = useState(defaultFormDisplay);
   const [formValues, setformValues] = useState(defaultFormValues);
   const { isLoading, data, error } = useGetResources();
   let { url } = useRouteMatch();
-
-  const isAuthenticated = () => {
-    if (user) {
-      return true;
-    }
-    return false;
-  };
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -81,16 +74,16 @@ export default function Resources() {
 
   return (
     <div>
-      {isAuthenticated && (
+      {isAuthenticated() && (
         <button onClick={toggleCreateForm} className="submitBtn">
           Add Resource
         </button>
       )}
 
-      {isAuthenticated && displayForm.createForm ? (
+      {isAuthenticated() && displayForm.createForm ? (
         <Resourcesform toggle={toggleCreateForm} onSubmit={handleAdd} />
       ) : null}
-      {isAuthenticated && displayForm.editForm ? (
+      {isAuthenticated() && displayForm.editForm ? (
         <Resourcesform
           toggle={toggleEditForm.bind(null, false)}
           onSubmit={handleEdit}
