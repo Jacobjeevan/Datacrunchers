@@ -15,40 +15,25 @@ export function useGetCareers() {
   };
 }
 
-export async function addCareer(body, token) {
+export async function addCareer(body) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}careers/add`,
-    body,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    body
   );
   return res.data;
 }
 
-export async function deleteCareer(id, token) {
+export async function deleteCareer(id) {
   const res = await axios.delete(
-    `${process.env.REACT_APP_API_URL}careers/delete/${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    `${process.env.REACT_APP_API_URL}careers/delete/${id}`
   );
   return res.data;
 }
 
-export async function updateCareer(body, token) {
+export async function updateCareer(body) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}careers/update/${body.id}`,
-    body,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    body
   );
   return res.data;
 }

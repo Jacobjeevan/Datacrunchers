@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Careersform from "./private/Careersform";
 import {
   useGetCareers,
@@ -9,9 +9,9 @@ import {
 import "../../css/careers.css";
 import { useState } from "react";
 import { mutate } from "swr";
-import { useAuth0 } from "@auth0/auth0-react";
 import LinkButton from "./LinkButton";
 import { useRouteMatch } from "react-router-dom";
+import { AuthContext } from "../common/Auth";
 
 const defaultFormValues = {
   title: "",
@@ -24,27 +24,11 @@ const defaultFormDisplay = {
 };
 
 export default function Careers() {
-  const { isAuthenticated, getAccessTokenSilently, user } = useAuth0();
+  const { user } = useContext(AuthContext);
   const [displayForm, setdisplayForm] = useState(defaultFormDisplay);
   const [formValues, setformValues] = useState(defaultFormValues);
   const { isLoading, data, error } = useGetCareers();
-  let token;
   let { url } = useRouteMatch();
-
-  async function getToken() {
-    try {
-      console.log(user);
-      token = await getAccessTokenSilently({
-        audience: process.env.REACT_APP_audience,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  if (isAuthenticated) {
-    getToken();
-  }
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -53,6 +37,13 @@ export default function Careers() {
   if (error) {
     return <span>Error: {error}</span>;
   }
+
+  const isAuthenticated = () => {
+    if (user) {
+      return true;
+    }
+    return false;
+  };
 
   function toggleCreateForm() {
     setdisplayForm((old) => ({ ...old, createForm: !displayForm.createForm }));
@@ -64,17 +55,17 @@ export default function Careers() {
   }
 
   async function handleDelete(id) {
-    await deleteCareer(id, token);
+    await deleteCareer(id);
     mutate("careerData");
   }
 
   async function handleAdd(formValues) {
-    await addCareer(formValues, token);
+    await addCareer(formValues);
     mutate("careerData");
   }
 
   async function handleEdit(formValues) {
-    await updateCareer(formValues, token);
+    await updateCareer(formValues);
     mutate("careerData");
     toggleEditForm(false);
   }
