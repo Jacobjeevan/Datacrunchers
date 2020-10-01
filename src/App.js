@@ -3,20 +3,23 @@ import Dashboard from "./layout/common/Dashboard";
 import Header from "./layout/common/Header";
 import "./App.css";
 import { AuthContext } from "./layout/common/Auth";
+import { getUser } from "./api/users";
 
 export default function App() {
   const [user, set] = useState();
 
   const setUser = (user) => {
-    localStorage.setItem("user", JSON.stringify(user));
     set(user);
   };
 
   useEffect(() => {
-    const localUser = JSON.parse(localStorage.getItem("user"));
-    if (localUser) {
-      setUser(localUser);
+    async function getUserFromSession() {
+      let user = await getUser();
+      if (user) {
+        setUser(user);
+      }
     }
+    getUserFromSession();
   }, []);
 
   return (

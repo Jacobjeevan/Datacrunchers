@@ -15,7 +15,6 @@ class Header extends Component {
     async function logout() {
       await logoutUser();
       setUser({});
-      localStorage.clear();
     }
 
     return (
