@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Officersform from "./private/Officersform";
 import {
   useGetOfficers,
@@ -9,7 +9,7 @@ import {
 import "../../css/officers.css";
 import { useState } from "react";
 import { mutate } from "swr";
-import { useAuth0 } from "@auth0/auth0-react";
+import { AuthContext } from "../common/Auth";
 
 const defaultFormValues = {
   name: "",
@@ -25,27 +25,17 @@ const defaultFormDisplay = {
 };
 
 export default function Officers() {
-  const { isAuthenticated, getAccessTokenSilently, user } = useAuth0();
+  const { user } = useContext(AuthContext);
   const [displayForm, setdisplayForm] = useState(defaultFormDisplay);
   const [formValues, setformValues] = useState(defaultFormValues);
   const { isLoading, data, error } = useGetOfficers();
 
-  let token;
-
-  async function getToken() {
-    try {
-      console.log(user);
-      token = await getAccessTokenSilently({
-        audience: process.env.REACT_APP_audience,
-      });
-    } catch (err) {
-      console.log(err);
+  const isAuthenticated = () => {
+    if (user) {
+      return true;
     }
-  }
-
-  if (isAuthenticated) {
-    getToken();
-  }
+    return false;
+  };
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -65,7 +55,7 @@ export default function Officers() {
   }
 
   async function handleDelete(id) {
-    await deleteOfficer(id, token);
+    await deleteOfficer(id);
     mutate("officerData");
   }
 
@@ -78,12 +68,12 @@ export default function Officers() {
         formBody.append("imageName", formValues.imageName[0]);
       }
     }
-    await addOfficer(formBody, token);
+    await addOfficer(formBody);
     mutate("officerData");
   }
 
   async function handleEdit(formValues) {
-    await updateOfficer(formValues, token);
+    await updateOfficer(formValues);
     mutate("officerData");
     toggleEditForm(false);
   }

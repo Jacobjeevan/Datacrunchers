@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Eventsform from "./private/Eventsform";
 import {
   useGetEvents,
@@ -9,9 +9,9 @@ import {
 import "../../css/events.css";
 import { useState } from "react";
 import { mutate } from "swr";
-import { useAuth0 } from "@auth0/auth0-react";
 import LinkButton from "./LinkButton";
 import { useRouteMatch } from "react-router-dom";
+import { AuthContext } from "../common/Auth";
 
 const defaultFormValues = {
   title: "",
@@ -26,28 +26,19 @@ const defaultFormDisplay = {
 };
 
 export default function Events() {
-  const { isAuthenticated, getAccessTokenSilently, user } = useAuth0();
+  const { user } = useContext(AuthContext);
   const [displayForm, setdisplayForm] = useState(defaultFormDisplay);
   const [formValues, setformValues] = useState(defaultFormValues);
   const { isLoading, data, error } = useGetEvents();
 
-  let token;
   let { url } = useRouteMatch();
 
-  async function getToken() {
-    try {
-      console.log(user);
-      token = await getAccessTokenSilently({
-        audience: process.env.REACT_APP_audience,
-      });
-    } catch (err) {
-      console.log(err);
+  const isAuthenticated = () => {
+    if (user) {
+      return true;
     }
-  }
-
-  if (isAuthenticated) {
-    getToken();
-  }
+    return false;
+  };
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -67,17 +58,17 @@ export default function Events() {
   }
 
   async function handleDelete(id) {
-    await deleteEvent(id, token);
+    await deleteEvent(id);
     mutate("eventData");
   }
 
   async function handleAdd(formValues) {
-    await addEvent(formValues, token);
+    await addEvent(formValues);
     mutate("eventData");
   }
 
   async function handleEdit(formValues) {
-    await updateEvent(formValues, token);
+    await updateEvent(formValues);
     mutate("eventData");
     toggleEditForm(false);
   }

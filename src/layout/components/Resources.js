@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Resourcesform from "./private/Resourcesform";
 import {
   useGetResources,
@@ -9,9 +9,9 @@ import {
 import "../../css/resources.css";
 import { useState } from "react";
 import { mutate } from "swr";
-import { useAuth0 } from "@auth0/auth0-react";
 import LinkButton from "./LinkButton";
 import { useRouteMatch } from "react-router-dom";
+import { AuthContext } from "../common/Auth";
 
 const defaultFormValues = {
   title: "",
@@ -24,27 +24,18 @@ const defaultFormDisplay = {
 };
 
 export default function Resources() {
-  const { isAuthenticated, getAccessTokenSilently, user } = useAuth0();
+  const { user } = useContext(AuthContext);
   const [displayForm, setdisplayForm] = useState(defaultFormDisplay);
   const [formValues, setformValues] = useState(defaultFormValues);
   const { isLoading, data, error } = useGetResources();
-  let token;
   let { url } = useRouteMatch();
 
-  async function getToken() {
-    try {
-      console.log(user);
-      token = await getAccessTokenSilently({
-        audience: process.env.REACT_APP_audience,
-      });
-    } catch (err) {
-      console.log(err);
+  const isAuthenticated = () => {
+    if (user) {
+      return true;
     }
-  }
-
-  if (isAuthenticated) {
-    getToken();
-  }
+    return false;
+  };
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -64,17 +55,17 @@ export default function Resources() {
   }
 
   async function handleDelete(id) {
-    await deleteResource(id, token);
+    await deleteResource(id);
     mutate("resourceData");
   }
 
   async function handleAdd(formValues) {
-    await addResource(formValues, token);
+    await addResource(formValues);
     mutate("resourceData");
   }
 
   async function handleEdit(formValues) {
-    await updateResource(formValues, token);
+    await updateResource(formValues);
     mutate("resourceData");
     toggleEditForm(false);
   }

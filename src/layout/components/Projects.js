@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Projectsform from "./private/Projectsform";
 import {
   useGetProjects,
@@ -9,9 +9,9 @@ import {
 import "../../css/projects.css";
 import { useState } from "react";
 import { mutate } from "swr";
-import { useAuth0 } from "@auth0/auth0-react";
 import LinkButton from "./LinkButton";
 import { useRouteMatch } from "react-router-dom";
+import { AuthContext } from "../common/Auth";
 
 const defaultFormValues = {
   title: "",
@@ -26,27 +26,18 @@ const defaultFormDisplay = {
 };
 
 export default function Projects() {
-  const { isAuthenticated, getAccessTokenSilently, user } = useAuth0();
+  const { user } = useContext(AuthContext);
   const [displayForm, setdisplayForm] = useState(defaultFormDisplay);
   const [formValues, setformValues] = useState(defaultFormValues);
   const { isLoading, data, error } = useGetProjects();
-  let token;
   let { url } = useRouteMatch();
 
-  async function getToken() {
-    try {
-      console.log(user);
-      token = await getAccessTokenSilently({
-        audience: process.env.REACT_APP_audience,
-      });
-    } catch (err) {
-      console.log(err);
+  const isAuthenticated = () => {
+    if (user) {
+      return true;
     }
-  }
-
-  if (isAuthenticated) {
-    getToken();
-  }
+    return false;
+  };
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -66,17 +57,17 @@ export default function Projects() {
   }
 
   async function handleDelete(id) {
-    await deleteProject(id, token);
+    await deleteProject(id);
     mutate("projectData");
   }
 
   async function handleAdd(formValues) {
-    await addProject(formValues, token);
+    await addProject(formValues);
     mutate("projectData");
   }
 
   async function handleEdit(formValues) {
-    await updateProject(formValues, token);
+    await updateProject(formValues);
     mutate("projectData");
     toggleEditForm(false);
   }
