@@ -12,6 +12,13 @@ export default function App() {
     set(user);
   };
 
+  function isAuthenticated() {
+    if (user) {
+      return true;
+    }
+    return false;
+  }
+
   useEffect(() => {
     async function getUserFromSession() {
       let user = await getUser();
@@ -24,7 +31,7 @@ export default function App() {
 
   return (
     <div>
-      <AuthContext.Provider value={{ user, setUser }}>
+      <AuthContext.Provider value={{ user, setUser, isAuthenticated }}>
         <Header />
         <Dashboard />
       </AuthContext.Provider>
