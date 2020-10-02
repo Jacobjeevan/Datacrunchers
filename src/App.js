@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Dashboard from "./layout/common/Dashboard";
-import Header from "./layout/common/Header";
+import Dashboard from "./Components/Main/Dashboard";
+import Header from "./Components/Main/Header";
 import "./App.css";
-import { AuthContext } from "./layout/common/Auth";
-import { getUser } from "./api/users";
+import { AuthContext } from "./Components/Auth/Auth";
+import { getUser } from "./Components/Auth/authAPI";
 
 export default function App() {
   const [user, set] = useState();
