@@ -118,7 +118,7 @@ export default function Officers() {
               </div>
               <div className="officer-email">Contact: {officer.email}</div>
             </div>
-            {isAuthenticated && (
+            {isAuthenticated() && (
               <div className="cardBtn-container">
                 <button
                   className="editBtn cardBtn"

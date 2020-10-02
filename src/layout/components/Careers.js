@@ -104,7 +104,7 @@ export default function Careers() {
               >
                 View Details
               </LinkButton>
-              {isAuthenticated && (
+              {isAuthenticated() && (
                 <div>
                   <button
                     className="editBtn cardBtn"

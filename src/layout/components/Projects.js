@@ -110,7 +110,7 @@ export default function Projects() {
               >
                 View Details
               </LinkButton>
-              {isAuthenticated && (
+              {isAuthenticated() && (
                 <div>
                   <button
                     className="editBtn cardBtn"
