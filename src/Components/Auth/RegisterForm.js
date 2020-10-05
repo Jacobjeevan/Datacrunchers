@@ -4,7 +4,8 @@ import { registerUser } from "./authAPI";
 import { yupResolver } from "@hookform/resolvers";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
+import "./registerform.css";
 
 const formSchema = Yup.object().shape({
   email: Yup.string().email().required("Email is required"),
@@ -33,19 +34,31 @@ export default function RegisterForm() {
 
   return (
     <Fragment>
-      <div className="formContent">
-        <form onSubmit={handleSubmit(callSubmit)}>
-          <input name="email" type="email" defaultValue="" ref={register} />
-          {errors.email?.message}
+      <div className="registerFormContent">
+        <h3>
+          Register or <Link to="/Login">Sign In</Link>
+        </h3>
+        <form className="registerForm" onSubmit={handleSubmit(callSubmit)}>
+          <div className="registerForm-element">
+            <label className="registerForm-label">Email</label>
+            <input name="email" type="email" defaultValue="" ref={register} />
+            {errors.email?.message}
+          </div>
 
-          <input name="username" type="text" defaultValue="" ref={register} />
-          {errors.username?.message}
+          <div className="registerForm-element">
+            <label className="registerForm-label">Username</label>
+            <input name="username" type="text" defaultValue="" ref={register} />
+            {errors.username?.message}
+          </div>
 
-          <input name="password" type="password" ref={register} />
-          {errors.password?.message}
+          <div className="registerForm-element">
+            <label className="registerForm-label">Password</label>
+            <input name="password" type="password" ref={register} />
+            {errors.password?.message}
+          </div>
 
-          <button type="submit" className="submitBtn">
-            Submit
+          <button type="submit" className="registerSubmitBtn">
+            Register
           </button>
         </form>
       </div>

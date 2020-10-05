@@ -4,7 +4,8 @@ import { loginUser } from "./authAPI";
 import { yupResolver } from "@hookform/resolvers";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
+import "./loginform.css";
 
 const formSchema = Yup.object().shape({
   username: Yup.string()
@@ -32,16 +33,28 @@ export default function LoginForm() {
 
   return (
     <Fragment>
-      <div className="formContent">
-        <form onSubmit={handleSubmit(callSubmit)}>
-          <input name="username" type="text" defaultValue="" ref={register} />
-          {errors.username && <span>This field is required</span>}
-
-          <input name="password" type="password" ref={register} />
-          {errors.password && <span>This field is required</span>}
-
-          <button type="submit" className="submitBtn">
-            Submit
+      <div className="loginFormContent">
+        <h3>
+          Sign In or <Link to="/Register">Register</Link>
+        </h3>
+        <form className="loginForm" onSubmit={handleSubmit(callSubmit)}>
+          <div className="loginForm-element">
+            <label className="loginForm-label">Username</label>
+            <input name="username" type="text" defaultValue="" ref={register} />
+            {errors.username && <span>This field is required</span>}
+          </div>
+          <div className="loginForm-element">
+            <label className="loginForm-label">Password</label>
+            <input
+              name="password"
+              type="password"
+              ref={register}
+              className="loginForm-element"
+            />
+            {errors.password && <span>This field is required</span>}
+          </div>
+          <button type="submit" className="loginSubmitBtn">
+            Login
           </button>
         </form>
       </div>
