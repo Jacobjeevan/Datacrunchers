@@ -15,7 +15,7 @@ export function useGetProjects() {
   };
 }
 
-export async function addProject(body, token) {
+export async function addProject(body) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}projects/add`,
     body
@@ -23,14 +23,14 @@ export async function addProject(body, token) {
   return res.data;
 }
 
-export async function deleteProject(id, token) {
+export async function deleteProject(id) {
   const res = await axios.delete(
     `${process.env.REACT_APP_API_URL}projects/delete/${id}`
   );
   return res.data;
 }
 
-export async function updateProject(body, token) {
+export async function updateProject(body) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}projects/update/${body.id}`,
     body

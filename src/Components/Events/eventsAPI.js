@@ -13,7 +13,7 @@ export function useGetEvents() {
   };
 }
 
-export async function addEvent(body, token) {
+export async function addEvent(body) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}events/add`,
     body
@@ -21,14 +21,14 @@ export async function addEvent(body, token) {
   return res.data;
 }
 
-export async function deleteEvent(id, token) {
+export async function deleteEvent(id) {
   const res = await axios.delete(
     `${process.env.REACT_APP_API_URL}events/delete/${id}`
   );
   return res.data;
 }
 
-export async function updateEvent(body, token) {
+export async function updateEvent(body) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}events/update/${body.id}`,
     body

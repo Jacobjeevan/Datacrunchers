@@ -15,7 +15,7 @@ export function useGetResources() {
   };
 }
 
-export async function addResource(body, token) {
+export async function addResource(body) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}resources/add`,
     body
@@ -23,14 +23,14 @@ export async function addResource(body, token) {
   return res.data;
 }
 
-export async function deleteResource(id, token) {
+export async function deleteResource(id) {
   const res = await axios.delete(
     `${process.env.REACT_APP_API_URL}resources/delete/${id}`
   );
   return res.data;
 }
 
-export async function updateResource(body, token) {
+export async function updateResource(body) {
   const res = await axios.post(
     `${process.env.REACT_APP_API_URL}resources/update/${body.id}`,
     body
