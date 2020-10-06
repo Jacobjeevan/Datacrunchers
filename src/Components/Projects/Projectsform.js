@@ -1,5 +1,6 @@
 import React from "react";
-import "./projectsform.css";
+import "../common/form.css";
+import "./Projectsform.css";
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
 import { yupResolver } from "@hookform/resolvers";
@@ -89,17 +90,19 @@ export default function Projectsform({
             className={errors.title ? "error" : null}
             errorMessage={errors.title?.message}
           />
-          <FormField
-            label="Description"
-            type="text"
-            name="description"
-            text="Enter Brief Description about the Project"
-            value={formValues.description}
-            ref={register}
-            onChange={(e) => setformValue("description", e.target.value)}
-            className={errors.description ? "error" : null}
-            errorMessage={errors.description?.message}
-          />
+
+          <div className="form-element">
+            <label className="form-label">Description</label>
+            <p className="error-message">{errors.description?.message}</p>
+            <textarea
+              name="description"
+              value={formValues.description}
+              ref={register}
+              onChange={(e) => setformValue("description", e.target.value)}
+              className={(errors.description ? "error" : null) + " form-field"}
+            ></textarea>
+            <p className="form-element-desc">Enter Project Description</p>
+          </div>
 
           <FormField
             label="Authors"

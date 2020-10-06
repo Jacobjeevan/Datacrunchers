@@ -100,10 +100,19 @@ export default function Projects() {
           <div key={project._id} className="project">
             <div className="project-meta">
               <div className="project-title">{project.title}</div>
-              <div className="project-authors">{project.authors}</div>
-              <div className="project-github">{project.github}</div>
+              <div className="project-authors">By: {project.authors}</div>
             </div>
             <div className="cardBtn-container">
+              <button
+                className="editBtn cardBtn"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open(`${project.github}`);
+                }}
+                type="button"
+              >
+                Github
+              </button>
               <LinkButton
                 to={`${url}/${project._id}`}
                 className="viewBtn cardBtn"
