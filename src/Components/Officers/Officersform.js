@@ -1,5 +1,5 @@
 import React from "react";
-import "./officersform.css";
+import "../common/form.css";
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
 import { useForm } from "react-hook-form";
@@ -29,7 +29,6 @@ const defaultFormValues = {
   title: "",
   description: "",
   email: "",
-  imageName: "",
 };
 
 export default function Officersform({
@@ -64,7 +63,13 @@ export default function Officersform({
   });
 
   const callSubmit = () => {
-    onSubmit(formValues);
+    var formBody = new FormData();
+    for (const [key, value] of Object.entries(formValues)) {
+      formBody.append(key, value);
+    }
+    var imageFile = document.querySelector(".headshot");
+    formBody.append("imageName", imageFile.files[0]);
+    onSubmit(formBody);
     setformValues(defaultFormValues);
   };
 
@@ -127,10 +132,10 @@ export default function Officersform({
 
           <label className="form-label">Officer's headshot: </label>
           <input
+            className="headshot"
             name="imageName"
             type="file"
             ref={register}
-            onChange={(e) => setformValue("imageName", e.target.value)}
           />
           <p>{errors.imageName?.message}</p>
           <button type="submit" className="submitBtn">

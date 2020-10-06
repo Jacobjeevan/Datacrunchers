@@ -53,15 +53,7 @@ export default function Officers() {
   }
 
   async function handleAdd(formValues) {
-    var formBody = new FormData();
-    for (const [key, value] of Object.entries(formValues)) {
-      if (key !== "imageName") {
-        formBody.append(key, value);
-      } else {
-        formBody.append("imageName", formValues.imageName[0]);
-      }
-    }
-    await addOfficer(formBody);
+    await addOfficer(formValues);
     mutate("officerData");
   }
 
