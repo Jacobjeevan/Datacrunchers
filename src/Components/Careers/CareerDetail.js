@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getCareerById } from "./careersAPI";
 import { useParams } from "react-router-dom";
+import "./careers.css";
+import "./careerDetail.css";
 
 export default function CareerDetail() {
   let { careerid } = useParams();

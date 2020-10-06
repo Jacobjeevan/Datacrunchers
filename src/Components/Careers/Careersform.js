@@ -1,4 +1,5 @@
 import React from "react";
+import "../common/form.css";
 import "./careersform.css";
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";

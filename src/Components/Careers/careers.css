@@ -20,23 +20,7 @@
 
 .career-title {
   text-align: center;
-}
-
-.career-description {
-  margin-top: 10px;
-  margin-bottom: 5px;
-  flex-grow: 3;
-  text-align: center;
-}
-
-.authors {
-  margin-top: 5px;
   margin-bottom: 10px;
-  text-align: center;
-}
-
-.github {
-  text-align: center;
 }
 
 .cardBtn-container {
