@@ -1,5 +1,5 @@
 import React from "react";
-import "./eventsform.css";
+import "../common/form.css";
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
 import { yupResolver } from "@hookform/resolvers";

@@ -1,0 +1,31 @@
+.event-meta {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 25px 0px 25px;
+}
+
+.event-title-detail {
+  font-size: xx-large;
+  text-align: center;
+}
+
+.event-description-detail {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  flex-grow: 3;
+  text-align: center;
+}
+
+.event-loc-date {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.event-location-detail {
+  text-align: left;
+}
+
+.event-date-detail {
+  text-align: right;
+}
