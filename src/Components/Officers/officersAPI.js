@@ -30,9 +30,9 @@ export async function deleteOfficer(id) {
   return res.data;
 }
 
-export async function updateOfficer(body) {
+export async function updateOfficer(id, body) {
   const res = await axios.post(
-    `${process.env.REACT_APP_API_URL}officers/update/${body.id}`,
+    `${process.env.REACT_APP_API_URL}officers/update/${id}`,
     body
   );
   return res.data;

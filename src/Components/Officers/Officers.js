@@ -57,8 +57,8 @@ export default function Officers() {
     mutate("officerData");
   }
 
-  async function handleEdit(formValues) {
-    await updateOfficer(formValues);
+  async function handleEdit(id, formValues) {
+    await updateOfficer(id, formValues);
     mutate("officerData");
     toggleEditForm(false);
   }
@@ -70,7 +70,6 @@ export default function Officers() {
       title: officer.title,
       description: officer.description,
       email: officer.email,
-      imageName: officer.imageName,
     });
     toggleEditForm();
   }
@@ -89,7 +88,7 @@ export default function Officers() {
       {isAuthenticated() && displayForm.editForm ? (
         <Officersform
           toggle={toggleEditForm.bind(null, false)}
-          onSubmit={handleEdit}
+          onSubmit={handleEdit.bind(null, formValues.id)}
           initialFormValues={formValues}
         />
       ) : null}
@@ -104,10 +103,8 @@ export default function Officers() {
                 className="officer-headshot"
               />
               <div className="officer-name">{officer.name}</div>
-              <div className="officer-title">Position: {officer.title}</div>
-              <div className="officer-description">
-                About: {officer.description}
-              </div>
+              <div className="officer-title">{officer.title}</div>
+              <div className="officer-description">{officer.description}</div>
               <div className="officer-email">Contact: {officer.email}</div>
             </div>
             {isAuthenticated() && (
