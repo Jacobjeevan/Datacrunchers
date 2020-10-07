@@ -136,6 +136,7 @@ export default function Officersform({
             name="imageName"
             type="file"
             ref={register}
+            required
           />
           <p>{errors.imageName?.message}</p>
           <button type="submit" className="submitBtn">
