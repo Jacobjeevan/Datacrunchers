@@ -9,6 +9,7 @@ import CareerDashboard from "../Careers/CareerDashboard";
 import ResourceDashboard from "../Resources/ResourceDashboard";
 import LoginForm from "../Auth/LoginForm";
 import RegisterForm from "../Auth/RegisterForm";
+import "../common/buttons.css";
 
 export default class Dashboard extends Component {
   render() {
