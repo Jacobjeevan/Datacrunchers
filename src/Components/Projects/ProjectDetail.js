@@ -20,13 +20,18 @@ export default function ProjectDetail() {
     <div>
       {project ? (
         <div className="project-meta">
-          <div className="project-title">{project.title}</div>
+          <div className="project-title-github">
+            <div className="project-title-detail">{project.title}</div>
+            <a href={project.github} className="project-github-detail">
+              Github
+            </a>
+          </div>
+
           <ReactMarkdown
             source={project.description}
             className="project-description-detail"
           />
-          <div className="project-authors">{project.authors}</div>
-          <div className="project-github">{project.github}</div>
+          <div className="project-authors-detail">By: {project.authors}</div>
         </div>
       ) : (
         "Loading"

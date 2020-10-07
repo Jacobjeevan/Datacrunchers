@@ -1,6 +1,38 @@
+.project-meta {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 25px 0px 25px;
+}
+
+.project-title-github {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  font-size: xx-large;
+  font-weight: lighter;
+  border-bottom: 2px solid #eee;
+}
+
+.project-title-detail {
+  text-align: left;
+}
+
 .project-description-detail {
   margin-top: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  padding: 20px;
   flex-grow: 3;
-  text-align: center;
+  border-bottom: 2px solid #eee;
+}
+
+.project-authors-detail {
+  text-align: left;
+}
+
+.project-github-detail {
+  text-align: right;
+}
+
+.project-github-detail:hover {
+  text-decoration: none;
 }

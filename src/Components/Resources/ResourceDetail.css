@@ -1,6 +1,11 @@
+.resource-title-detail {
+  font-size: xx-large;
+  font-weight: lighter;
+  border-bottom: 2px solid #eee;
+}
+
 .resource-description-detail {
   margin-top: 10px;
   margin-bottom: 5px;
   flex-grow: 3;
-  text-align: center;
 }

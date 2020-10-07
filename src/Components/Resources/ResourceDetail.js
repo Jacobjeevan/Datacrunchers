@@ -20,7 +20,7 @@ export default function ResourceDetail() {
     <div>
       {resource ? (
         <div className="resource-meta">
-          <div className="resource-title">{resource.title}</div>
+          <div className="resource-title-detail">{resource.title}</div>
           <ReactMarkdown
             source={resource.description}
             className="resource-description-detail"

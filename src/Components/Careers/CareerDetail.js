@@ -21,7 +21,7 @@ export default function CareerDetail() {
     <div>
       {career ? (
         <div className="career-meta">
-          <div className="career-title">{career.title}</div>
+          <div className="career-title-detail">{career.title}</div>
           <ReactMarkdown
             source={career.description}
             className="career-description-detail"

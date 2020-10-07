@@ -15,11 +15,12 @@
 .resource-meta {
   display: flex;
   flex-direction: column;
-  padding: 5px 25px 0px 25px;
+  padding: 5px 5px 0px 5px;
 }
 
 .resource-title {
   text-align: center;
+  margin: 20px;
 }
 
 .resource-description {
