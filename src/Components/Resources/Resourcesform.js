@@ -78,16 +78,19 @@ export default function Resourcesform({
             className={errors.title ? "error" : null}
             errorMessage={errors.title?.message}
           />
-          <FormField
-            label="Description"
-            type="text"
-            name="description"
-            value={formValues.description}
-            ref={register}
-            onChange={(e) => setformValue("description", e.target.value)}
-            className={errors.description ? "error" : null}
-            errorMessage={errors.description?.message}
-          />
+
+          <div className="form-element">
+            <label className="form-label">Description</label>
+            <p className="error-message">{errors.description?.message}</p>
+            <textarea
+              name="description"
+              value={formValues.description}
+              ref={register}
+              onChange={(e) => setformValue("description", e.target.value)}
+              className={(errors.description ? "error" : null) + " form-field"}
+            ></textarea>
+            <p className="form-element-desc">Enter Resource Description</p>
+          </div>
 
           <button type="submit" className="submitBtn">
             Submit

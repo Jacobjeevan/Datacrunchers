@@ -54,3 +54,10 @@
 .form-file {
   margin-bottom: 1rem;
 }
+
+textarea.form-field {
+  width: 100%;
+  order: 3;
+  border: 1px solid black;
+  font-weight: 300;
+}
