@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getProjectById } from "./projectsAPI";
 import { useParams } from "react-router-dom";
+import "./ProjectDetail.css";
+const ReactMarkdown = require("react-markdown");
 
 export default function ProjectDetail() {
   let { projectid } = useParams();
@@ -19,7 +21,10 @@ export default function ProjectDetail() {
       {project ? (
         <div className="project-meta">
           <div className="project-title">{project.title}</div>
-          <div className="project-description">{project.description}</div>
+          <ReactMarkdown
+            source={project.description}
+            className="project-description-detail"
+          />
           <div className="project-authors">{project.authors}</div>
           <div className="project-github">{project.github}</div>
         </div>

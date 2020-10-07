@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getEventById } from "./eventsAPI";
 import { useParams } from "react-router-dom";
 import "./EventDetail.css";
+const ReactMarkdown = require("react-markdown");
 
 export default function EventDetail() {
   let { eventid } = useParams();
@@ -21,7 +22,10 @@ export default function EventDetail() {
       {event ? (
         <div className="event-meta">
           <div className="event-title-detail">{event.title}</div>
-          <div className="event-description-detail">{event.description}</div>
+          <ReactMarkdown
+            source={event.description}
+            className="event-description-detail"
+          />
           <div className="event-loc-date">
             <div className="event-location-detail">{event.location}</div>
             <div className="event-date-detail">
