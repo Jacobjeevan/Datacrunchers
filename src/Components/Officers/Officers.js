@@ -108,7 +108,7 @@ export default function Officers() {
               <div className="officer-email">Contact: {officer.email}</div>
             </div>
             {isAuthenticated() && (
-              <div className="cardBtn-container">
+              <div className="adminBtn-container">
                 <button
                   className="editBtn cardBtn"
                   onClick={handleEditButton.bind(this, officer)}

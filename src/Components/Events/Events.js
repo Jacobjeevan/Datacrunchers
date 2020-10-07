@@ -119,7 +119,7 @@ export default function Events() {
                 View Details
               </LinkButton>
               {isAuthenticated() && (
-                <div>
+                <div className="adminBtn-container">
                   <button
                     className="editBtn cardBtn"
                     onClick={handleEditButton.bind(this, event)}

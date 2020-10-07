@@ -103,16 +103,6 @@ export default function Projects() {
               <div className="project-authors">By: {project.authors}</div>
             </div>
             <div className="cardBtn-container">
-              <button
-                className="editBtn cardBtn"
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.open(`${project.github}`);
-                }}
-                type="button"
-              >
-                Github
-              </button>
               <LinkButton
                 to={`${url}/${project._id}`}
                 className="viewBtn cardBtn"
@@ -120,7 +110,7 @@ export default function Projects() {
                 View Details
               </LinkButton>
               {isAuthenticated() && (
-                <div>
+                <div className="adminBtn-container">
                   <button
                     className="editBtn cardBtn"
                     onClick={handleEditButton.bind(this, project)}
