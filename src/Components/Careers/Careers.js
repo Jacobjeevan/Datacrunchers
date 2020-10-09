@@ -12,6 +12,7 @@ import { mutate } from "swr";
 import LinkButton from "../common/LinkButton";
 import { useRouteMatch } from "react-router-dom";
 import { AuthContext } from "../Auth/Auth";
+import { ToastAlerts } from "../Main/Notifications";
 
 const defaultFormValues = {
   title: "",
@@ -48,17 +49,20 @@ export default function Careers() {
   }
 
   async function handleDelete(id) {
-    await deleteCareer(id);
+    let data = await deleteCareer(id);
+    ToastAlerts(data);
     mutate("careerData");
   }
 
   async function handleAdd(formValues) {
-    await addCareer(formValues);
+    let data = await addCareer(formValues);
+    ToastAlerts(data);
     mutate("careerData");
   }
 
   async function handleEdit(formValues) {
-    await updateCareer(formValues);
+    let data = await updateCareer(formValues);
+    ToastAlerts(data);
     mutate("careerData");
     toggleEditForm(false);
   }

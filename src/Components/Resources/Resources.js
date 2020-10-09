@@ -12,6 +12,7 @@ import { mutate } from "swr";
 import LinkButton from "../common/LinkButton";
 import { useRouteMatch } from "react-router-dom";
 import { AuthContext } from "../Auth/Auth";
+import { ToastAlerts } from "../Main/Notifications";
 
 const defaultFormValues = {
   title: "",
@@ -48,17 +49,20 @@ export default function Resources() {
   }
 
   async function handleDelete(id) {
-    await deleteResource(id);
+    let data = await deleteResource(id);
+    ToastAlerts(data);
     mutate("resourceData");
   }
 
   async function handleAdd(formValues) {
-    await addResource(formValues);
+    let data = await addResource(formValues);
+    ToastAlerts(data);
     mutate("resourceData");
   }
 
   async function handleEdit(formValues) {
-    await updateResource(formValues);
+    let data = await updateResource(formValues);
+    ToastAlerts(data);
     mutate("resourceData");
     toggleEditForm(false);
   }

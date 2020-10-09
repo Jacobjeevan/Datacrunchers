@@ -10,6 +10,7 @@ import "./officers.css";
 import { useState } from "react";
 import { mutate } from "swr";
 import { AuthContext } from "../Auth/Auth";
+import { ToastAlerts } from "../Main/Notifications";
 
 const defaultFormValues = {
   name: "",
@@ -48,17 +49,20 @@ export default function Officers() {
   }
 
   async function handleDelete(id) {
-    await deleteOfficer(id);
+    let data = await deleteOfficer(id);
+    ToastAlerts(data);
     mutate("officerData");
   }
 
   async function handleAdd(formValues) {
-    await addOfficer(formValues);
+    let data = await addOfficer(formValues);
+    ToastAlerts(data);
     mutate("officerData");
   }
 
   async function handleEdit(id, formValues) {
-    await updateOfficer(id, formValues);
+    let data = await updateOfficer(id, formValues);
+    ToastAlerts(data);
     mutate("officerData");
     toggleEditForm(false);
   }
