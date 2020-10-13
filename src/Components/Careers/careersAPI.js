@@ -1,11 +1,9 @@
-import axios from "axios";
 import useSWR from "swr";
+import { axiosInstance } from "../common/Axios";
 
 export function useGetCareers() {
   const { data, error, mutate } = useSWR("careerData", () =>
-    axios
-      .get(`${process.env.REACT_APP_API_URL}careers/`)
-      .then((res) => res.data)
+    axiosInstance.get("careers/").then((res) => res.data)
   );
   return {
     data,
@@ -16,29 +14,21 @@ export function useGetCareers() {
 }
 
 export async function addCareer(body) {
-  const res = await axios.post(
-    `${process.env.REACT_APP_API_URL}careers/add`,
-    body
-  );
+  const res = await axiosInstance.post("careers/add", body);
   return res.data;
 }
 
 export async function deleteCareer(id) {
-  const res = await axios.delete(
-    `${process.env.REACT_APP_API_URL}careers/delete/${id}`
-  );
+  const res = await axiosInstance.delete(`careers/delete/${id}`);
   return res.data;
 }
 
 export async function updateCareer(body) {
-  const res = await axios.post(
-    `${process.env.REACT_APP_API_URL}careers/update/${body.id}`,
-    body
-  );
+  const res = await axiosInstance.post(`careers/update/${body.id}`, body);
   return res.data;
 }
 
 export async function getCareerById(id) {
-  const res = await axios.get(`${process.env.REACT_APP_API_URL}careers/${id}`);
+  const res = await axiosInstance.get(`careers/${id}`);
   return res.data;
 }

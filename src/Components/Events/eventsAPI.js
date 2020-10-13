@@ -1,9 +1,9 @@
-import axios from "axios";
 import useSWR from "swr";
+import { axiosInstance } from "../common/Axios";
 
 export function useGetEvents() {
   const { data, error, mutate } = useSWR("eventData", () =>
-    axios.get(`${process.env.REACT_APP_API_URL}events/`).then((res) => res.data)
+    axiosInstance.get("events/").then((res) => res.data)
   );
   return {
     data,
@@ -14,29 +14,21 @@ export function useGetEvents() {
 }
 
 export async function addEvent(body) {
-  const res = await axios.post(
-    `${process.env.REACT_APP_API_URL}events/add`,
-    body
-  );
+  const res = await axiosInstance.post("events/add", body);
   return res.data;
 }
 
 export async function deleteEvent(id) {
-  const res = await axios.delete(
-    `${process.env.REACT_APP_API_URL}events/delete/${id}`
-  );
+  const res = await axiosInstance.delete(`events/delete/${id}`);
   return res.data;
 }
 
 export async function updateEvent(body) {
-  const res = await axios.post(
-    `${process.env.REACT_APP_API_URL}events/update/${body.id}`,
-    body
-  );
+  const res = await axiosInstance.post(`events/update/${body.id}`, body);
   return res.data;
 }
 
 export async function getEventById(id) {
-  const res = await axios.get(`${process.env.REACT_APP_API_URL}events/${id}`);
+  const res = await axiosInstance.get(`events/${id}`);
   return res.data;
 }
