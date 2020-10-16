@@ -1,30 +1,41 @@
-import axios from "axios";
-
-axios.defaults.withCredentials = true;
+import { axiosInstance } from "../common/Axios";
 
 export async function loginUser(body) {
-  const res = await axios.post(`${process.env.REACT_APP_API_URL}login/`, body);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.post("login/", body);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
 
 export async function logoutUser() {
-  const res = await axios.get(`${process.env.REACT_APP_API_URL}logout/`);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.post("logout/");
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
 
 export async function registerUser(body) {
-  const res = await axios.post(
-    `${process.env.REACT_APP_API_URL}register/`,
-    body
-  );
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.post("register/", body);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
 
 export async function getUser() {
-  const res = await axios.get(`${process.env.REACT_APP_API_URL}user/`);
-  if (res.data) {
-    return res.data;
-  } else {
+  let response;
+  try {
+    response = await axiosInstance.post("user/");
+    return response.data;
+  } catch (error) {
     return null;
   }
 }
