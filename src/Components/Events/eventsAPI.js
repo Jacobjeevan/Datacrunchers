@@ -14,21 +14,41 @@ export function useGetEvents() {
 }
 
 export async function addEvent(body) {
-  const res = await axiosInstance.post("events/add", body);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.post("events/add", body);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
 
 export async function deleteEvent(id) {
-  const res = await axiosInstance.delete(`events/delete/${id}`);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.delete(`events/delete/${id}`);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
 
 export async function updateEvent(body) {
-  const res = await axiosInstance.post(`events/update/${body.id}`, body);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.post(`events/update/${body.id}`, body);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
 
 export async function getEventById(id) {
-  const res = await axiosInstance.get(`events/${id}`);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.get(`events/${id}`);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }

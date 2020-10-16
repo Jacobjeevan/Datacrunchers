@@ -14,21 +14,41 @@ export function useGetCareers() {
 }
 
 export async function addCareer(body) {
-  const res = await axiosInstance.post("careers/add", body);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.post("careers/add", body);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
 
 export async function deleteCareer(id) {
-  const res = await axiosInstance.delete(`careers/delete/${id}`);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.delete(`careers/delete/${id}`);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
 
 export async function updateCareer(body) {
-  const res = await axiosInstance.post(`careers/update/${body.id}`, body);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.post(`careers/update/${body.id}`, body);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
 
 export async function getCareerById(id) {
-  const res = await axiosInstance.get(`careers/${id}`);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.get(`careers/${id}`);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }

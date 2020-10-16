@@ -14,20 +14,41 @@ export function useGetProjects() {
 }
 
 export async function addProject(body) {
-  const res = await axiosInstance.post("projects/add", body);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.post("projects/add", body);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
 
 export async function deleteProject(id) {
-  const res = await axiosInstance.delete(`projects/delete/${id}`);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.delete(`projects/delete/${id}`);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
 
 export async function updateProject(body) {
-  const res = await axiosInstance.post(`projects/update/${body.id}`, body);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.post(`projects/update/${body.id}`, body);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
+
 export async function getProjectById(id) {
-  const res = await axiosInstance.get(`projects/${id}`);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.get(`projects/${id}`);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }

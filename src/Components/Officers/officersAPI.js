@@ -14,16 +14,31 @@ export function useGetOfficers() {
 }
 
 export async function addOfficer(body) {
-  const res = await axiosInstance.post("officers/add", body);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.post("officers/add", body);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
 
 export async function deleteOfficer(id) {
-  const res = await axiosInstance.delete(`officers/delete/${id}`);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.delete(`officers/delete/${id}`);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
 
 export async function updateOfficer(id, body) {
-  const res = await axiosInstance.post(`officers/update/${id}`, body);
-  return res.data;
+  let response;
+  try {
+    response = await axiosInstance.post(`officers/update/${id}`, body);
+  } catch (error) {
+    response = error.response;
+  }
+  return response.data;
 }
