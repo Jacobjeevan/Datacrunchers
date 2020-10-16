@@ -36,7 +36,7 @@ export default function Careers() {
   }
 
   if (error) {
-    return <span>Error: {error}</span>;
+    return <span>Error</span>;
   }
 
   function toggleCreateForm() {

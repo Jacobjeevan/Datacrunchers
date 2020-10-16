@@ -36,7 +36,7 @@ export default function Officers() {
   }
 
   if (error) {
-    return <span>Error: {error}</span>;
+    return <span>Error</span>;
   }
 
   function toggleCreateForm() {

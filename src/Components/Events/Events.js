@@ -34,7 +34,7 @@ export default function Events() {
   }
 
   if (error) {
-    return <span>Error: {error}</span>;
+    return <span>Error</span>;
   }
 
   function toggleCreateForm() {
