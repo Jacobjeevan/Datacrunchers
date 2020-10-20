@@ -78,6 +78,7 @@ export default function Careers() {
 
   return (
     <div>
+      <h2 className="component-title">Career Prep Resources</h2>
       {isAuthenticated() && (
         <button onClick={toggleCreateForm} className="submitBtn">
           Add Career

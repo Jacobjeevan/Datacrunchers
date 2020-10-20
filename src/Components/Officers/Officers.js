@@ -80,6 +80,7 @@ export default function Officers() {
 
   return (
     <div>
+      <h2 className="component-title">Officers</h2>
       {isAuthenticated() && (
         <button onClick={toggleCreateForm} className="submitBtn">
           Add Officer

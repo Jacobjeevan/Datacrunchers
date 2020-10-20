@@ -82,6 +82,7 @@ export default function Projects() {
 
   return (
     <div>
+      <h2 className="component-title">Projects</h2>
       {isAuthenticated() && (
         <button onClick={toggleCreateForm} className="submitBtn">
           Add Project

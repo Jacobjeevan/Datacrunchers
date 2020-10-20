@@ -15,6 +15,9 @@
 
 .project-title-detail {
   text-align: left;
+  font-size: xx-large;
+  font-weight: lighter;
+  border-bottom: 2px solid #eee;
 }
 
 .project-description-detail {

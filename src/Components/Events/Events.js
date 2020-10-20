@@ -88,6 +88,7 @@ export default function Events() {
 
   return (
     <div>
+      <h2 className="component-title">Events</h2>
       {isAuthenticated() && (
         <button onClick={toggleCreateForm} className="submitBtn">
           Add Event

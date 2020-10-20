@@ -78,6 +78,7 @@ export default function Resources() {
 
   return (
     <div>
+      <h2 className="component-title">Resources</h2>
       {isAuthenticated() && (
         <button onClick={toggleCreateForm} className="submitBtn">
           Add Resource

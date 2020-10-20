@@ -1,3 +1,10 @@
 body {
   font-family: "Fira Sans", sans-serif;
 }
+
+.component-title {
+  font-size: xx-large;
+  font-weight: lighter;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+}
